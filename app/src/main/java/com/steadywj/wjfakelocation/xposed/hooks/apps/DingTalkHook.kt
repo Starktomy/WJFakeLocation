@@ -28,7 +28,10 @@ class DingTalkHook : IAppHook {
             hookAMapLatLng(appLpparam, context)
         }
         if (ProviderHelper.useDingTalkAntiDetect(context)) {
-            hookEnvironment(appLpparam, context)
+            hookAntiDetect(appLpparam, context)
+        }
+        if (ProviderHelper.useDingTalkWifiHook(context)) {
+            hookWifi(appLpparam, context)
         }
         if (ProviderHelper.useDingTalkUpdateHook(context)) {
             hookUpdate(appLpparam, context)
@@ -143,41 +146,60 @@ class DingTalkHook : IAppHook {
     }
 
     @Suppress("TooGenericExceptionCaught", "SwallowedException", "UnusedParameter")
-    private fun hookEnvironment(
+    private fun hookAntiDetect(
         appLpparam: XC_LoadPackage.LoadPackageParam,
         context: Context
     ) {
         try {
             // 1. 拦截阿里安全组件 ILBSRiskComponent (绕过 LBSWUA / DDSEC 真实坐标收集)
-            val lbsRiskClass =
-                XposedHelpers.findClassIfExists(
-                    "com.alibaba.wireless.security.open.lbsrisk.ILBSRiskComponent",
-                    appLpparam.classLoader
-                ) ?: XposedHelpers.findClassIfExists(
-                    "com.taobao.wireless.security.sdk.lbsrisk.LBSRiskComponent",
-                    appLpparam.classLoader
-                )
+            // 在 Root Xposed 环境中，安全组件通常是插件化或动态加载的（DexClassLoader），在 handleLoadPackage 阶段直接 findClass 会返回 null。
+            // 因此我们需要监听 ClassLoader 的 loadClass 方法，在安全组件类被加载的瞬间进行 Hook。
+            var hasHookedLbs = false
+            XposedBridge.hookAllMethods(
+                ClassLoader::class.java,
+                "loadClass",
+                object : XC_MethodHook() {
+                    override fun afterHookedMethod(param: MethodHookParam) {
+                        if (hasHookedLbs || param.hasThrowable()) return
+                        val cls = param.result as? Class<*> ?: return
+                        val className = cls.name
 
-            if (lbsRiskClass != null) {
-                XposedBridge.hookAllMethods(
-                    lbsRiskClass,
-                    "putLocationData",
-                    object : XC_MethodHook() {
-                        override fun beforeHookedMethod(param: MethodHookParam) {
-                            if (!ProviderHelper.isPlaying(context)) return
-                            val loc = param.args[0] as? android.location.Location ?: return
-                            loc.latitude = ProviderHelper.getLatitude(context)
-                            loc.longitude = ProviderHelper.getLongitude(context)
+                        if (className == "com.alibaba.wireless.security.open.lbsrisk.ILBSRiskComponent" ||
+                            className == "com.taobao.wireless.security.sdk.lbsrisk.LBSRiskComponent"
+                        ) {
+                            hasHookedLbs = true
+                            XposedBridge.hookAllMethods(
+                                cls,
+                                "putLocationData",
+                                object : XC_MethodHook() {
+                                    override fun beforeHookedMethod(innerParam: MethodHookParam) {
+                                        if (!ProviderHelper.isPlaying(context)) return
+                                        val loc = innerParam.args[0] as? android.location.Location ?: return
+                                        loc.latitude = ProviderHelper.getLatitude(context)
+                                        loc.longitude = ProviderHelper.getLongitude(context)
+                                    }
+                                }
+                            )
                         }
                     }
-                )
-            }
+                }
+            )
+        } catch (e: Throwable) {
+            // 忽略异常
+        }
+    }
 
+    @Suppress("TooGenericExceptionCaught", "SwallowedException", "UnusedParameter")
+    private fun hookWifi(
+        appLpparam: XC_LoadPackage.LoadPackageParam,
+        context: Context
+    ) {
+        try {
             // 2. 拦截 Wi-Fi 信息 (打卡防篡改不仅查 GPS，还会查 Wi-Fi 的 BSSID)
             val wifiHook =
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
-                        if (!ProviderHelper.useDingTalkAntiDetect(context)) return
+                        if (!ProviderHelper.useDingTalkWifiHook(context)) return
                         when (param.method.name) {
                             "getSSID" -> param.result = "\"${ProviderHelper.getWifiSSID(context)}\""
                             "getBSSID" -> param.result = ProviderHelper.getWifiBSSID(context)

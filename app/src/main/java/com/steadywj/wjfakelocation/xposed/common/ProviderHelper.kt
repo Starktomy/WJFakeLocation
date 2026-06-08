@@ -40,6 +40,7 @@ object ProviderHelper {
             "use_dingtalk_anti_detect",
             "use_dingtalk_update_hook",
             "use_dingtalk_camera_hook",
+            "use_dingtalk_wifi_hook",
             "wifi_ssid",
             "wifi_bssid",
             "wifi_mac"
@@ -242,6 +243,13 @@ object ProviderHelper {
         ensureCache(context)
         synchronized(cache) {
             return cache["use_dingtalk_camera_hook"] as? Boolean ?: false
+        }
+    }
+
+    fun useDingTalkWifiHook(context: Context): Boolean {
+        ensureCache(context)
+        synchronized(cache) {
+            return cache["use_dingtalk_wifi_hook"] as? Boolean ?: false
         }
     }
 

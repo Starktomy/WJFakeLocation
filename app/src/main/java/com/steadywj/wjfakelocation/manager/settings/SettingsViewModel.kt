@@ -154,6 +154,17 @@ class SettingsViewModel
             }
         }
 
+        fun updateDingTalkWifiHook(enabled: Boolean) {
+            viewModelScope.launch {
+                val current = settings.value
+                preferencesRepository.updateSettings(
+                    current.copy(
+                        useDingTalkWifiHook = enabled,
+                    ),
+                )
+            }
+        }
+
         fun updateWifiSSID(ssid: String) {
             viewModelScope.launch {
                 val current = settings.value
