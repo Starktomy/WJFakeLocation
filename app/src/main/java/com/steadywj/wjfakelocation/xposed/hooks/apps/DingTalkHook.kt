@@ -25,6 +25,8 @@ class DingTalkHook : IAppHook {
     ) {
         hookAMapLocation(appLpparam)
         hookAMapLatLng(appLpparam)
+        hookEnvironment(appLpparam)
+        hookUpdate(appLpparam)
     }
 
     @Suppress("TooGenericExceptionCaught", "SwallowedException")
