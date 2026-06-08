@@ -24,7 +24,7 @@ android {
 
     defaultConfig {
         applicationId = "com.steadywj.wjfakelocation"
-        minSdk = 33
+        minSdk = 31
         targetSdk = 35
         versionCode = System.getenv("VERSION_CODE")?.toIntOrNull() ?: 1
         versionName = System.getenv("VERSION_NAME") ?: "2.0.0"
