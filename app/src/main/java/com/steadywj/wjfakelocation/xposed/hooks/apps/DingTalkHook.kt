@@ -158,11 +158,53 @@ class DingTalkHook : IAppHook {
         // 实现版本强更屏蔽
     }
 
-    @Suppress("UnusedParameter")
+    @Suppress(
+        "TooGenericExceptionCaught",
+        "SwallowedException",
+        "UnusedParameter",
+        "ComplexCondition",
+        "ReturnCount",
+        "MaxLineLength"
+    )
     private fun hookCamera(
         appLpparam: XC_LoadPackage.LoadPackageParam,
         context: Context
     ) {
-        // 实现相机拍照替换
+        try {
+            XposedBridge.hookAllMethods(
+                java.io.File::class.java,
+                "getAbsolutePath",
+                object : XC_MethodHook() {
+                    override fun afterHookedMethod(param: MethodHookParam) {
+                        if (!ProviderHelper.useDingTalkCameraHook(context)) return
+
+                        val originalPath = param.result as? String ?: return
+
+                        // 典型的拍照临时文件路径特征
+                        // 实际开发中需结合用户选择的替换图片路径
+                        val fakeImagePath = "/sdcard/Pictures/fake_attendance.jpg"
+
+                        // 避免错误替换
+                        if (originalPath == fakeImagePath) return
+
+                        // 检查是否为钉钉缓存目录中的临时图片文件
+                        if (originalPath.contains("com.alibaba.android.rimet") &&
+                            (originalPath.contains("cache") || originalPath.contains("temp")) &&
+                            (
+                                originalPath.endsWith(".jpg", ignoreCase = true) ||
+                                    originalPath.endsWith(".jpeg", ignoreCase = true)
+                            )
+                        ) {
+                            val fakeFile = java.io.File(fakeImagePath)
+                            if (fakeFile.exists()) {
+                                param.result = fakeImagePath
+                            }
+                        }
+                    }
+                }
+            )
+        } catch (e: Throwable) {
+            // 忽略异常
+        }
     }
 }
