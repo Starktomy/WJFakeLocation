@@ -16,6 +16,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
  * - Hook LocationManager 的位置获取方?
  * - 支持多版?Android 适配
  */
+@Suppress("TooGenericExceptionCaught")
 class LocationApiHooks(private val appLpparam: LoadPackageParam, private val context: android.content.Context) {
     private val tag = "[LocationApiHooks]"
 
@@ -42,10 +43,7 @@ class LocationApiHooks(private val appLpparam: LoadPackageParam, private val con
                         if (!shouldFakeLocation()) return
 
                         LocationUtil.updateLocation(context)
-                        XposedBridge.log("$tag Intercepting getLatitude()")
-                        XposedBridge.log("\t Original: ${param.result as Double}")
                         param.result = LocationUtil.latitude
-                        XposedBridge.log("\t Fake: ${LocationUtil.latitude}")
                     }
                 },
             )
@@ -59,10 +57,7 @@ class LocationApiHooks(private val appLpparam: LoadPackageParam, private val con
                         if (!shouldFakeLocation()) return
 
                         LocationUtil.updateLocation(context)
-                        XposedBridge.log("$tag Intercepting getLongitude()")
-                        XposedBridge.log("\t Original: ${param.result as Double}")
                         param.result = LocationUtil.longitude
-                        XposedBridge.log("\t Fake: ${LocationUtil.longitude}")
                     }
                 },
             )
@@ -76,11 +71,8 @@ class LocationApiHooks(private val appLpparam: LoadPackageParam, private val con
                         if (!shouldFakeLocation()) return
 
                         LocationUtil.updateLocation(context)
-                        XposedBridge.log("$tag Intercepting getAccuracy()")
-                        XposedBridge.log("\t Original: ${param.result as Float}")
                         if (LocationUtil.useAccuracy) {
                             param.result = LocationUtil.accuracy
-                            XposedBridge.log("\t Fake: ${LocationUtil.accuracy}")
                         }
                     }
                 },
@@ -95,11 +87,8 @@ class LocationApiHooks(private val appLpparam: LoadPackageParam, private val con
                         if (!shouldFakeLocation()) return
 
                         LocationUtil.updateLocation(context)
-                        XposedBridge.log("$tag Intercepting getAltitude()")
-                        XposedBridge.log("\t Original: ${param.result as Double}")
                         if (LocationUtil.useAltitude) {
                             param.result = LocationUtil.altitude
-                            XposedBridge.log("\t Fake: ${LocationUtil.altitude}")
                         }
                     }
                 },
@@ -114,11 +103,8 @@ class LocationApiHooks(private val appLpparam: LoadPackageParam, private val con
                         if (!shouldFakeLocation()) return
 
                         LocationUtil.updateLocation(context)
-                        XposedBridge.log("$tag Intercepting getVerticalAccuracyMeters()")
-                        XposedBridge.log("\t Original: ${param.result as Float}")
                         if (LocationUtil.useVerticalAccuracy) {
                             param.result = LocationUtil.verticalAccuracy
-                            XposedBridge.log("\t Fake: ${LocationUtil.verticalAccuracy}")
                         }
                     }
                 },
@@ -133,11 +119,8 @@ class LocationApiHooks(private val appLpparam: LoadPackageParam, private val con
                         if (!shouldFakeLocation()) return
 
                         LocationUtil.updateLocation(context)
-                        XposedBridge.log("$tag Intercepting getSpeed()")
-                        XposedBridge.log("\t Original: ${param.result as Float}")
                         if (LocationUtil.useSpeed) {
                             param.result = LocationUtil.speed
-                            XposedBridge.log("\t Fake: ${LocationUtil.speed}")
                         }
                     }
                 },
@@ -152,11 +135,8 @@ class LocationApiHooks(private val appLpparam: LoadPackageParam, private val con
                         if (!shouldFakeLocation()) return
 
                         LocationUtil.updateLocation(context)
-                        XposedBridge.log("$tag Intercepting getSpeedAccuracyMetersPerSecond()")
-                        XposedBridge.log("\t Original: ${param.result as Float}")
                         if (LocationUtil.useSpeedAccuracy) {
                             param.result = LocationUtil.speedAccuracy
-                            XposedBridge.log("\t Fake: ${LocationUtil.speedAccuracy}")
                         }
                     }
                 },
@@ -173,11 +153,8 @@ class LocationApiHooks(private val appLpparam: LoadPackageParam, private val con
                             if (!shouldFakeLocation()) return
 
                             LocationUtil.updateLocation(context)
-                            XposedBridge.log("$tag Intercepting getMslAltitudeMeters()")
-                            XposedBridge.log("\t Original: ${param.result as? Double}")
                             if (LocationUtil.useMeanSeaLevel) {
                                 param.result = LocationUtil.meanSeaLevel
-                                XposedBridge.log("\t Fake: ${LocationUtil.meanSeaLevel}")
                             }
                         }
                     },
@@ -192,17 +169,14 @@ class LocationApiHooks(private val appLpparam: LoadPackageParam, private val con
                             if (!shouldFakeLocation()) return
 
                             LocationUtil.updateLocation(context)
-                            XposedBridge.log("$tag Intercepting getMslAltitudeAccuracyMeters()")
-                            XposedBridge.log("\t Original: ${param.result as? Float}")
                             if (LocationUtil.useMeanSeaLevelAccuracy) {
                                 param.result = LocationUtil.meanSeaLevelAccuracy
-                                XposedBridge.log("\t Fake: ${LocationUtil.meanSeaLevelAccuracy}")
                             }
                         }
                     },
                 )
             }
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
             XposedBridge.log("$tag Error hooking Location class: ${e.message}")
         }
     }
@@ -252,7 +226,7 @@ class LocationApiHooks(private val appLpparam: LoadPackageParam, private val con
                     },
                 )
             }
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
             XposedBridge.log("$tag Error hooking LocationManager: ${e.message}")
         }
     }
@@ -262,6 +236,7 @@ class LocationApiHooks(private val appLpparam: LoadPackageParam, private val con
      * 可以根据应用包名、用户设置等进行控制
      */
     private fun shouldFakeLocation(): Boolean {
-        return com.steadywj.wjfakelocation.xposed.common.ProviderHelper.shouldFakePackage(context, appLpparam.packageName)
+        return com.steadywj.wjfakelocation.xposed.common.ProviderHelper
+            .shouldFakePackage(context, appLpparam.packageName)
     }
 }

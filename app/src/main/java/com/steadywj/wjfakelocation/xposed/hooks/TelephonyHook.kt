@@ -10,7 +10,6 @@ import android.telephony.CellIdentityWcdma
 import android.telephony.CellInfo
 import android.telephony.TelephonyManager
 import com.steadywj.wjfakelocation.data.model.FakeCellInfo
-import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.XC_MethodReplacement
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
@@ -24,7 +23,11 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage
  * - 修改服务小区信息
  * - 支持 2G/3G/4G/5G 全制式
  */
-class TelephonyHook(private val appLpparam: XC_LoadPackage.LoadPackageParam, private val context: android.content.Context) {
+@Suppress("TooManyFunctions", "TooGenericExceptionCaught")
+class TelephonyHook(
+    private val appLpparam: XC_LoadPackage.LoadPackageParam,
+    private val context: android.content.Context,
+) {
     fun initHooks() {
         val lpparam = appLpparam
         // Hook TelephonyManager.getAllCellInfo()
@@ -59,7 +62,7 @@ class TelephonyHook(private val appLpparam: XC_LoadPackage.LoadPackageParam, pri
                             val fakeCells = createFakeCellInfoList()
                             XposedBridge.log("[TelephonyHook] 返回伪造基站列表：${fakeCells.size}个")
                             return fakeCells
-                        } catch (e: Exception) {
+                        } catch (e: Throwable) {
                             XposedBridge.log("[TelephonyHook] 创建假基站失败：${e.message}")
                             return de.robv.android.xposed.XposedBridge.invokeOriginalMethod(param.method, param.thisObject, param.args)
                         }
@@ -92,7 +95,7 @@ class TelephonyHook(private val appLpparam: XC_LoadPackage.LoadPackageParam, pri
                             val fakeLocation = createFakeCellLocation()
                             XposedBridge.log("[TelephonyHook] 返回伪造服务小区位置")
                             return fakeLocation
-                        } catch (e: Exception) {
+                        } catch (e: Throwable) {
                             XposedBridge.log("[TelephonyHook] 创建假服务小区失败：${e.message}")
                             return de.robv.android.xposed.XposedBridge.invokeOriginalMethod(param.method, param.thisObject, param.args)
                         }
@@ -214,7 +217,7 @@ class TelephonyHook(private val appLpparam: XC_LoadPackage.LoadPackageParam, pri
                         com.steadywj.wjfakelocation.data.model.CellType.NR -> createNrCellInfo(fakeInfo, index == 0)
                     }
                 fakeCells.add(cellInfo)
-            } catch (e: Exception) {
+            } catch (e: Throwable) {
                 XposedBridge.log("[TelephonyHook] 创建${fakeInfo.type}基站失败：${e.message}")
             }
         }
@@ -373,7 +376,7 @@ class TelephonyHook(private val appLpparam: XC_LoadPackage.LoadPackageParam, pri
     ): CellInfo {
         val cellInfoNr =
             de.robv.android.xposed.XposedHelpers.newInstance(
-                android.telephony.CellIdentityNr::class.java
+                android.telephony.CellInfoNr::class.java
             ) as android.telephony.CellInfo
         XposedHelpers.callMethod(cellInfoNr, "setRegistered", isRegistered)
 
@@ -395,32 +398,77 @@ class TelephonyHook(private val appLpparam: XC_LoadPackage.LoadPackageParam, pri
     // ==================== CellLocation 创建 ====================
 
     private fun createGsmCellLocation(fakeInfo: FakeCellInfo): Any {
-        return XposedHelpers.newInstance(
-            XposedHelpers.findClass("android.telephony.gsm.GsmCellLocation", null),
-            fakeInfo.lac ?: 0,
-            fakeInfo.cid ?: 0,
-        )
+        val location =
+            XposedHelpers.newInstance(
+                XposedHelpers.findClass("android.telephony.gsm.GsmCellLocation", null)
+            )
+        XposedHelpers.callMethod(location, "setLacAndCid", fakeInfo.lac ?: 0, fakeInfo.cid ?: 0)
+        return location
     }
 
     private fun createLteCellLocation(fakeInfo: FakeCellInfo): Any {
-        // API 33+ 使用 CellLocation.createCdma(...)
-        val cellLocationClass = XposedHelpers.findClass("android.telephony.CellLocation", null)
-        return XposedHelpers.callStaticMethod(
-            cellLocationClass,
-            "createCdma",
-            fakeInfo.basestationId ?: 0,
-            fakeInfo.longitude ?: 0.0,
-            fakeInfo.latitude ?: 0.0,
-            0,
-        )
+        val location =
+            XposedHelpers.newInstance(
+                XposedHelpers.findClass("android.telephony.gsm.GsmCellLocation", null)
+            )
+        XposedHelpers.callMethod(location, "setLacAndCid", fakeInfo.lac ?: 0, fakeInfo.ci ?: fakeInfo.cid ?: 0)
+        return location
     }
 
-    // ... 其他类型类似
+    private fun createCdmaCellLocation(fakeInfo: FakeCellInfo): Any {
+        val location =
+            XposedHelpers.newInstance(
+                XposedHelpers.findClass("android.telephony.cdma.CdmaCellLocation", null)
+            )
+        XposedHelpers.callMethod(
+            location,
+            "setCellLocationData",
+            fakeInfo.basestationId ?: 0,
+            fakeInfo.latitude?.toInt() ?: 0,
+            fakeInfo.longitude?.toInt() ?: 0,
+            0,
+            0
+        )
+        return location
+    }
+
+    private fun createWcdmaCellLocation(fakeInfo: FakeCellInfo): Any {
+        val location =
+            XposedHelpers.newInstance(
+                XposedHelpers.findClass("android.telephony.gsm.GsmCellLocation", null)
+            )
+        XposedHelpers.callMethod(location, "setLacAndCid", fakeInfo.lac ?: 0, fakeInfo.cid ?: 0)
+        return location
+    }
+
+    private fun createTdscdmaCellLocation(fakeInfo: FakeCellInfo): Any {
+        val location =
+            XposedHelpers.newInstance(
+                XposedHelpers.findClass("android.telephony.gsm.GsmCellLocation", null)
+            )
+        XposedHelpers.callMethod(location, "setLacAndCid", fakeInfo.lac ?: 0, fakeInfo.cid ?: 0)
+        return location
+    }
+
+    private fun createNrCellLocation(fakeInfo: FakeCellInfo): Any {
+        val location =
+            XposedHelpers.newInstance(
+                XposedHelpers.findClass("android.telephony.gsm.GsmCellLocation", null)
+            )
+        XposedHelpers.callMethod(
+            location,
+            "setLacAndCid",
+            fakeInfo.tac ?: fakeInfo.lac ?: 0,
+            fakeInfo.nci ?: fakeInfo.cid ?: 0
+        )
+        return location
+    }
 
     // ==================== 工具方法 ====================
 
     private fun isFakeCellEnabled(): Boolean {
-        return com.steadywj.wjfakelocation.xposed.common.ProviderHelper.shouldFakePackage(context, appLpparam.packageName)
+        return com.steadywj.wjfakelocation.xposed.common.ProviderHelper
+            .shouldFakePackage(context, appLpparam.packageName)
     }
 
     private enum class CellType {
@@ -431,20 +479,4 @@ class TelephonyHook(private val appLpparam: XC_LoadPackage.LoadPackageParam, pri
         TDSCDMA,
         NR,
     }
-}
-
-private fun createCdmaCellLocation(fakeInfo: com.steadywj.wjfakelocation.data.model.FakeCellInfo): android.telephony.CellLocation? {
-    return null
-}
-
-private fun createWcdmaCellLocation(fakeInfo: com.steadywj.wjfakelocation.data.model.FakeCellInfo): android.telephony.CellLocation? {
-    return null
-}
-
-private fun createTdscdmaCellLocation(fakeInfo: com.steadywj.wjfakelocation.data.model.FakeCellInfo): android.telephony.CellLocation? {
-    return null
-}
-
-private fun createNrCellLocation(fakeInfo: com.steadywj.wjfakelocation.data.model.FakeCellInfo): android.telephony.CellLocation? {
-    return null
 }

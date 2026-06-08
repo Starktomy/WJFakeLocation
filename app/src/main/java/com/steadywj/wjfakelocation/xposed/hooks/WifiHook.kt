@@ -8,7 +8,6 @@ import android.os.SystemClock
 import com.steadywj.wjfakelocation.data.model.FakeWifiInfo
 import com.steadywj.wjfakelocation.data.model.SecurityType
 import com.steadywj.wjfakelocation.data.model.WifiBand
-import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.XC_MethodReplacement
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
@@ -22,6 +21,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage
  * - 修改当前连接的 WiFi 信息
  * - 支持 WPA/WPA2/WPA3 加密类型
  */
+@Suppress("TooGenericExceptionCaught")
 class WifiHook(private val appLpparam: XC_LoadPackage.LoadPackageParam, private val context: android.content.Context) {
     fun initHooks() {
         val lpparam = appLpparam
@@ -56,7 +56,7 @@ class WifiHook(private val appLpparam: XC_LoadPackage.LoadPackageParam, private 
                             val fakeWifiList = createFakeScanResults()
                             XposedBridge.log("[WifiHook] 返回伪造 WiFi 列表：${fakeWifiList.size}个")
                             return fakeWifiList
-                        } catch (e: Exception) {
+                        } catch (e: Throwable) {
                             XposedBridge.log("[WifiHook] 创建假 WiFi 列表失败：${e.message}")
                             return XposedBridge.invokeOriginalMethod(param.method, param.thisObject, param.args)
                         }
@@ -89,7 +89,7 @@ class WifiHook(private val appLpparam: XC_LoadPackage.LoadPackageParam, private 
                             val fakeInfo = createFakeConnectionInfo()
                             XposedBridge.log("[WifiHook] 返回伪造连接信息")
                             return fakeInfo
-                        } catch (e: Exception) {
+                        } catch (e: Throwable) {
                             XposedBridge.log("[WifiHook] 创建假连接信息失败：${e.message}")
                             return XposedBridge.invokeOriginalMethod(param.method, param.thisObject, param.args)
                         }
@@ -122,7 +122,7 @@ class WifiHook(private val appLpparam: XC_LoadPackage.LoadPackageParam, private 
                             val fakeConfigs = createFakeConfiguredNetworks()
                             XposedBridge.log("[WifiHook] 返回伪造配置网络列表：${fakeConfigs.size}个")
                             return fakeConfigs
-                        } catch (e: Exception) {
+                        } catch (e: Throwable) {
                             XposedBridge.log("[WifiHook] 创建假配置网络失败：${e.message}")
                             return XposedBridge.invokeOriginalMethod(param.method, param.thisObject, param.args)
                         }
@@ -175,7 +175,7 @@ class WifiHook(private val appLpparam: XC_LoadPackage.LoadPackageParam, private 
                 }
 
                 fakeWifis.add(scanResult)
-            } catch (e: Exception) {
+            } catch (e: Throwable) {
                 XposedBridge.log("[WifiHook] 创建 WiFi 失败：${e.message}")
             }
         }
@@ -218,13 +218,6 @@ class WifiHook(private val appLpparam: XC_LoadPackage.LoadPackageParam, private 
             }
         XposedHelpers.callMethod(wifiInfo, "setFrequency", frequency)
 
-        // IP 地址
-        XposedHelpers.callMethod(
-            wifiInfo,
-            "setIpAddress",
-            java.net.InetAddress.getByName("192.168.1.100").address,
-        )
-
         return wifiInfo
     }
 
@@ -263,7 +256,7 @@ class WifiHook(private val appLpparam: XC_LoadPackage.LoadPackageParam, private 
                 }
 
                 fakeConfigs.add(config)
-            } catch (e: Exception) {
+            } catch (e: Throwable) {
                 XposedBridge.log("[WifiHook] 创建配置网络失败：${e.message}")
             }
         }
@@ -300,6 +293,7 @@ class WifiHook(private val appLpparam: XC_LoadPackage.LoadPackageParam, private 
     }
 
     private fun isFakeWifiEnabled(): Boolean {
-        return com.steadywj.wjfakelocation.xposed.common.ProviderHelper.shouldFakePackage(context, appLpparam.packageName)
+        return com.steadywj.wjfakelocation.xposed.common.ProviderHelper
+            .shouldFakePackage(context, appLpparam.packageName)
     }
 }

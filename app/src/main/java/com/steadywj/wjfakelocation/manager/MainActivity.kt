@@ -60,18 +60,13 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    @Suppress("FunctionOnlyReturningConstant")
+    private fun isModuleActive(): Boolean {
+        return false
+    }
+
     private fun checkXposedModuleStatus() {
-        // 如果模块未激活，app 将无法使?MODE_WORLD_READABLE
-        try {
-            getSharedPreferences("xposed_shared_prefs", MODE_WORLD_READABLE)
-            isXposedModuleEnabled = true
-        } catch (e: SecurityException) {
-            isXposedModuleEnabled = false
-            Log.e(TAG, "SecurityException: Xposed 模块可能未激?- ${e.message}", e)
-        } catch (e: Exception) {
-            isXposedModuleEnabled = false
-            Log.e(TAG, "Exception: ${e.message}", e)
-        }
+        isXposedModuleEnabled = isModuleActive()
     }
 
     private fun requestRequiredPermissions() {

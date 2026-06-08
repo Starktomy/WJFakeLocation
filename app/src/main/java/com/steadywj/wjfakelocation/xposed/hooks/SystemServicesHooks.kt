@@ -11,6 +11,7 @@ import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
 
+@Suppress("TooGenericExceptionCaught")
 class SystemServicesHooks(val appLpparam: LoadPackageParam) {
     private val tag = "[SystemServicesHooks]"
 
@@ -71,7 +72,7 @@ class SystemServicesHooks(val appLpparam: LoadPackageParam) {
                     }
                 },
             )
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
             XposedBridge.log("$tag Error hooking system services")
             XposedBridge.log(e)
         }

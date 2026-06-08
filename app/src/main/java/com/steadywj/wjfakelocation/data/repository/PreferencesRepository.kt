@@ -35,7 +35,8 @@ class PreferencesRepository
                 EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM,
             )
 
-        private val prefs: SharedPreferences = context.getSharedPreferences("wjfakelocation_prefs", Context.MODE_WORLD_READABLE)
+        private val prefs: SharedPreferences =
+            context.getSharedPreferences("wjfakelocation_prefs", Context.MODE_PRIVATE)
 
         private val _settings = MutableStateFlow(LocationSettings())
         val settings: StateFlow<LocationSettings> = _settings.asStateFlow()
