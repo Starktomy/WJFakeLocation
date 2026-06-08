@@ -7,6 +7,8 @@ import com.steadywj.wjfakelocation.xposed.hooks.LocationApiHooks
 import com.steadywj.wjfakelocation.xposed.hooks.SystemServicesHooks
 import com.steadywj.wjfakelocation.xposed.hooks.TelephonyHook
 import com.steadywj.wjfakelocation.xposed.hooks.WifiHook
+import com.steadywj.wjfakelocation.xposed.hooks.apps.DingTalkHook
+import com.steadywj.wjfakelocation.xposed.hooks.apps.IAppHook
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XC_MethodReplacement
@@ -51,6 +53,7 @@ class MainHook : IXposedHookLoadPackage {
         initHookingLogic(lpparam)
     }
 
+    @Suppress("TooGenericExceptionCaught")
     private fun initHookingLogic(lpparam: LoadPackageParam) {
         try {
             XposedHelpers.findAndHookMethod(
@@ -70,10 +73,19 @@ class MainHook : IXposedHookLoadPackage {
                         locationApiHooks = LocationApiHooks(lpparam, context!!).also { it.initHooks() }
                         telephonyHook = TelephonyHook(lpparam, context!!).also { it.initHooks() }
                         wifiHook = WifiHook(lpparam, context!!).also { it.initHooks() }
+
+                        // 应用差异化 Hook 策略
+                        val appHooks = listOf<IAppHook>(DingTalkHook())
+                        appHooks.forEach { hooker ->
+                            if (hooker.targetPackages.contains(lpparam.packageName)) {
+                                hooker.hook(lpparam, context!!)
+                                XposedBridge.log("$tag Specific hooks initialized for ${lpparam.packageName}")
+                            }
+                        }
                     }
                 },
             )
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
             XposedBridge.log("$tag Error initializing hook logic: ${e.message}")
         }
     }
