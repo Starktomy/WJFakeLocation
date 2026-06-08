@@ -20,17 +20,17 @@ data class LocationSettings(
     val useSpeedAccuracy: Boolean = false,
     val speedAccuracy: Float = 0.0f,
     val selectedLocation: SelectedLocation? = null,
-    val targetMode: TargetMode = TargetMode.GLOBAL, // GLOBAL or APP_SPECIFIC
-    val targetPackages: List<String> = emptyList()
+    val targetMode: TargetMode = TargetMode.GLOBAL,
+    val targetPackages: List<String> = emptyList(),
 )
 
 data class SelectedLocation(
     val latitude: Double,
     val longitude: Double,
-    val address: String? = null
+    val address: String? = null,
 )
 
 enum class TargetMode {
-    GLOBAL,         // 全局伪造
-    APP_SPECIFIC    // 按应用伪造
+    GLOBAL,
+    APP_SPECIFIC,
 }

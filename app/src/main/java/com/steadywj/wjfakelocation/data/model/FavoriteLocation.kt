@@ -12,8 +12,8 @@ data class FavoriteLocation(
     val latitude: Double,
     val longitude: Double,
     val address: String? = null,
-    val category: String = "default", // 分类：家、公司、自定义等
-    val tags: String = "", // 标签，逗号分隔
+    val category: String = "default",
+    val tags: String = "",
     val createdAt: Long = System.currentTimeMillis(),
-    val updatedAt: Long = System.currentTimeMillis()
+    val updatedAt: Long = System.currentTimeMillis(),
 )

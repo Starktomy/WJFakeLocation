@@ -9,14 +9,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.steadywj.wjfakelocation.R
 
+@OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
 @Composable
 fun AddFavoriteDialog(
     onDismiss: () -> Unit,
-    onConfirm: (name: String, category: String) -> Unit
+    onConfirm: (name: String, category: String) -> Unit,
 ) {
     var name by remember { mutableStateOf("") }
     var category by remember { mutableStateOf("default") }
-    
+
     AlertDialog(
         onDismissRequest = onDismiss,
         title = {
@@ -24,20 +25,20 @@ fun AddFavoriteDialog(
         },
         text = {
             Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 OutlinedTextField(
                     value = name,
                     onValueChange = { name = it },
                     label = { Text("名称") },
                     placeholder = { Text("输入地点名称") },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 )
-                
+
                 var expanded by remember { mutableStateOf(false) }
                 ExposedDropdownMenuBox(
                     expanded = expanded,
-                    onExpandedChange = { expanded = !expanded }
+                    onExpandedChange = { expanded = !expanded },
                 ) {
                     OutlinedTextField(
                         value = category,
@@ -45,42 +46,43 @@ fun AddFavoriteDialog(
                         readOnly = true,
                         label = { Text("分类") },
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .menuAnchor()
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .menuAnchor(),
                     )
-                    
+
                     ExposedDropdownMenu(
                         expanded = expanded,
-                        onDismissRequest = { expanded = false }
+                        onDismissRequest = { expanded = false },
                     ) {
                         DropdownMenuItem(
                             text = { Text("默认") },
                             onClick = {
                                 category = "default"
                                 expanded = false
-                            }
+                            },
                         )
                         DropdownMenuItem(
-                            text = { Text("�?) },
+                            text = { Text("家") },
                             onClick = {
                                 category = "home"
                                 expanded = false
-                            }
+                            },
                         )
                         DropdownMenuItem(
                             text = { Text("公司") },
                             onClick = {
                                 category = "work"
                                 expanded = false
-                            }
+                            },
                         )
                         DropdownMenuItem(
                             text = { Text("其他") },
                             onClick = {
                                 category = "other"
                                 expanded = false
-                            }
+                            },
                         )
                     }
                 }
@@ -98,10 +100,10 @@ fun AddFavoriteDialog(
                         onConfirm(name, category)
                     }
                 },
-                enabled = name.isNotBlank()
+                enabled = name.isNotBlank(),
             ) {
                 Text(stringResource(id = R.string.ok))
             }
-        }
+        },
     )
 }

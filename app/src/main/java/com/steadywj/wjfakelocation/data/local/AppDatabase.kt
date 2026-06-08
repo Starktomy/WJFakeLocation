@@ -8,7 +8,7 @@ import com.steadywj.wjfakelocation.data.model.FavoriteLocation
 @Database(
     entities = [FavoriteLocation::class],
     version = 1,
-    exportSchema = false
+    exportSchema = false,
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun favoriteLocationDao(): FavoriteLocationDao

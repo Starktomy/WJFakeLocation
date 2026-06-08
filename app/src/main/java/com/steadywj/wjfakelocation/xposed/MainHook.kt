@@ -4,7 +4,6 @@ package com.steadywj.wjfakelocation.xposed
 import android.app.Application
 import android.content.Context
 import android.widget.Toast
-import com.steadywj.wjfakelocation.data.MANAGER_APP_PACKAGE_NAME
 import com.steadywj.wjfakelocation.xposed.hooks.LocationApiHooks
 import com.steadywj.wjfakelocation.xposed.hooks.SystemServicesHooks
 import de.robv.android.xposed.IXposedHookLoadPackage
@@ -23,7 +22,7 @@ class MainHook : IXposedHookLoadPackage {
 
     override fun handleLoadPackage(lpparam: LoadPackageParam) {
         // 避免 hook 自身应用导致递归
-        if (lpparam.packageName == MANAGER_APP_PACKAGE_NAME) return
+        if (lpparam.packageName == "com.steadywj.wjfakelocation") return
 
         // 如果未启用则不执行 hook
         if (!isPlaying()) return
@@ -52,16 +51,18 @@ class MainHook : IXposedHookLoadPackage {
                 Application::class.java,
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
-                        context = (param.args[0] as Application).applicationContext.also {
-                            XposedBridge.log("$tag Target app context acquired successfully")
-                            Toast.makeText(it, "WJFakeLocation 已激活!", Toast.LENGTH_SHORT).show()
-                        }
-                        
-                        locationApiHooks = LocationApiHooks(lpparam).also { 
-                            it.initHooks() 
-                        }
+                        context =
+                            (param.args[0] as Application).applicationContext.also {
+                                XposedBridge.log("$tag Target app context acquired successfully")
+                                Toast.makeText(it, "WJFakeLocation 已激活!", Toast.LENGTH_SHORT).show()
+                            }
+
+                        locationApiHooks =
+                            LocationApiHooks(lpparam).also {
+                                it.initHooks()
+                            }
                     }
-                }
+                },
             )
         } catch (e: Exception) {
             XposedBridge.log("$tag Error initializing hook logic: ${e.message}")

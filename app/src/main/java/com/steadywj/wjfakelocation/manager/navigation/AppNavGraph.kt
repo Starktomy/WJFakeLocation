@@ -15,7 +15,7 @@ import com.steadywj.wjfakelocation.manager.settings.SettingsScreen
 fun AppNavGraph(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = Screen.Map.route
+        startDestination = Screen.Map.route,
     ) {
         composable(Screen.Map.route) {
             MapScreen(
@@ -24,18 +24,18 @@ fun AppNavGraph(navController: NavHostController) {
                 },
                 onNavigateToFavorites = {
                     navController.navigate(Screen.Favorites.route)
-                }
+                },
             )
         }
-        
+
         composable(Screen.Favorites.route) {
             FavoritesScreen(
                 onNavigateBack = {
                     navController.popBackStack()
-                }
+                },
             )
         }
-        
+
         composable(Screen.Settings.route) {
             SettingsScreen(
                 onNavigateBack = {
@@ -43,23 +43,23 @@ fun AppNavGraph(navController: NavHostController) {
                 },
                 onNavigateToApiKeySettings = {
                     navController.navigate(Screen.ApiKeySettings.route)
-                }
+                },
             )
         }
-        
+
         composable(Screen.ApiKeySettings.route) {
             ApiKeySettingsScreen(
                 onNavigateBack = {
                     navController.popBackStack()
-                }
+                },
             )
         }
-        
+
         composable(Screen.About.route) {
             AboutScreen(
                 onNavigateBack = {
                     navController.popBackStack()
-                }
+                },
             )
         }
     }

@@ -10,6 +10,7 @@ on:
       - 'v*'
   pull_request:
     branches: [ "main" ]
+  workflow_dispatch:
 
 # 环境变量
 env:
@@ -37,6 +38,12 @@ jobs:
       # Step 1: 检出代码
       - name: Checkout code
         uses: actions/checkout@v4
+      
+      # Step 1.5: 准备依赖项
+      - name: Prepare SDKs
+        run: |
+          chmod +x scripts/prepare_sdks.sh
+          ./scripts/prepare_sdks.sh
       
       # Step 2: 设置 JDK
       - name: Setup JDK
@@ -153,6 +160,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       
+      - name: Prepare SDKs
+        run: |
+          chmod +x scripts/prepare_sdks.sh
+          ./scripts/prepare_sdks.sh
+      
       - name: Setup JDK
         uses: actions/setup-java@v4
         with:
@@ -196,6 +208,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      
+      - name: Prepare SDKs
+        run: |
+          chmod +x scripts/prepare_sdks.sh
+          ./scripts/prepare_sdks.sh
       
       - name: Setup JDK
         uses: actions/setup-java@v4

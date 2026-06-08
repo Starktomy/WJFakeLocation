@@ -13,10 +13,10 @@ import com.steadywj.wjfakelocation.R
 fun ProfileDialog(
     onDismiss: () -> Unit,
     onSave: (name: String) -> Unit,
-    onLoad: (name: String) -> Unit
+    onLoad: (name: String) -> Unit,
 ) {
     var profileName by remember { mutableStateOf("") }
-    
+
     AlertDialog(
         onDismissRequest = onDismiss,
         title = {
@@ -24,53 +24,53 @@ fun ProfileDialog(
         },
         text = {
             Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 OutlinedTextField(
                     value = profileName,
                     onValueChange = { profileName = it },
                     label = { Text("模式名称") },
-                    placeholder = { Text("例如：家、公司、学�?) },
-                    modifier = Modifier.fillMaxWidth()
+                    placeholder = { Text("例如：家、公司、学校") },
+                    modifier = Modifier.fillMaxWidth(),
                 )
-                
+
                 Divider()
-                
+
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     Text(
-                        text = "预设模式�?,
-                        style = MaterialTheme.typography.labelLarge
+                        text = "预设模式",
+                        style = MaterialTheme.typography.labelLarge,
                     )
-                    
+
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
                         FilterChip(
                             onClick = { /* 加载家庭模式 */ },
-                            label = { Text("�?) },
-                            selected = false
+                            label = { Text("家") },
+                            selected = false,
                         )
                         FilterChip(
                             onClick = { /* 加载工作模式 */ },
                             label = { Text("公司") },
-                            selected = false
+                            selected = false,
                         )
                         FilterChip(
                             onClick = { /* 加载学校模式 */ },
                             label = { Text("学校") },
-                            selected = false
+                            selected = false,
                         )
                     }
                 }
             }
-            
+
             Text(
                 text = "提示：保存模式将存储当前的所有定位设置（精度、海拔、速度等）",
                 style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         },
         dismissButton = {
@@ -80,7 +80,7 @@ fun ProfileDialog(
         },
         confirmButton = {
             Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 OutlinedButton(
                     onClick = {
@@ -88,22 +88,22 @@ fun ProfileDialog(
                             onLoad(profileName)
                         }
                     },
-                    enabled = profileName.isNotBlank()
+                    enabled = profileName.isNotBlank(),
                 ) {
                     Text("加载")
                 }
-                
+
                 Button(
                     onClick = {
                         if (profileName.isNotBlank()) {
                             onSave(profileName)
                         }
                     },
-                    enabled = profileName.isNotBlank()
+                    enabled = profileName.isNotBlank(),
                 ) {
                     Text("保存")
                 }
             }
-        }
+        },
     )
 }

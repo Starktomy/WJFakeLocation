@@ -37,25 +37,26 @@ class SystemServicesHooks(val appLpparam: LoadPackageParam) {
                             param.result = fakeLocation
                             XposedBridge.log("\t Modified to: $fakeLocation (original method not executed)")
                         }
-                    })
+                    },
+                )
             } else {
                 XposedBridge.log("$tag API level too low. System services hooks are not available.")
             }
 
-            val methodsToReplace = arrayOf(
-                "addGnssBatchingCallback",
-                "addGnssMeasurementsListener",
-                "addGnssNavigationMessageListener"
-            )
+            val methodsToReplace =
+                arrayOf(
+                    "addGnssBatchingCallback",
+                    "addGnssMeasurementsListener",
+                    "addGnssNavigationMessageListener",
+                )
 
             for (methodName in methodsToReplace) {
                 XposedHelpers.findAndHookMethod(
                     locationManagerServiceClass,
                     methodName,
-                    XC_MethodReplacement.returnConstant(false)
+                    XC_MethodReplacement.returnConstant(false),
                 )
             }
-
 
             XposedHelpers.findAndHookMethod(
                 XposedHelpers.findClass("com.android.server.LocationManagerService\$Receiver", classLoader),
@@ -64,12 +65,12 @@ class SystemServicesHooks(val appLpparam: LoadPackageParam) {
                 object : XC_MethodHook() {
                     override fun beforeHookedMethod(param: MethodHookParam) {
                         XposedBridge.log("$tag [SystemHook] Entered method callLocationChangedLocked(location)")
-                        val fakeLocation = LocationUtil.createFakeLocation(param.args[0] as? Location)
+                        val fakeLocation = LocationUtil.createFakeLocation((param.args[0] as? Location)?.provider ?: "gps")
                         param.args[0] = fakeLocation
                         XposedBridge.log("\t Modified to: $fakeLocation")
                     }
-                })
-
+                },
+            )
         } catch (e: Exception) {
             XposedBridge.log("$tag Error hooking system services")
             XposedBridge.log(e)

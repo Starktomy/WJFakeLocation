@@ -1,0 +1,360 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>ConstructorParameterNaming:CloudSyncService.kt$FavoriteSupabaseDto$val created_at: Long? = null</ID>
+    <ID>ConstructorParameterNaming:CloudSyncService.kt$FavoriteSupabaseDto$val device_id: String</ID>
+    <ID>ConstructorParameterNaming:CloudSyncService.kt$FavoriteSupabaseDto$val updated_at: Long? = null</ID>
+    <ID>CyclomaticComplexMethod:GpxParser.kt$GpxParser$fun parse(inputStream: InputStream): List&lt;TrackSegment&gt;</ID>
+    <ID>CyclomaticComplexMethod:KmlParser.kt$KmlParser$fun parse(inputStream: InputStream): KmlDocument</ID>
+    <ID>EmptyFunctionBlock:BaiduMapManager.kt$BaiduMapManager.&lt;no name provided&gt;${}</ID>
+    <ID>ForbiddenComment:LocationApiHooks.kt$LocationApiHooks$// TODO: 实现更精细的控制逻辑</ID>
+    <ID>ForbiddenComment:LocationUtil.kt$LocationUtil$// TODO: 从 PreferencesRepository 读取最新设置</ID>
+    <ID>ForbiddenComment:MainHook.kt$MainHook$// TODO: 注入 PreferencesRepository 或使用静态方法读取</ID>
+    <ID>ForbiddenComment:MapProvider.kt$GoogleMapProvider$// TODO: 使用 Geocoding API</ID>
+    <ID>ForbiddenComment:MapProvider.kt$GoogleMapProvider$// TODO: 初始化 Google Play Services</ID>
+    <ID>ForbiddenComment:PluginManager.kt$PluginManager$// TODO: 添加 APK 签名验证（使用 jarsigner 或 apksigner）</ID>
+    <ID>ForbiddenComment:SearchHistoryManager.kt$SearchHistoryManager$// TODO: 添加 kotlinx-serialization 依赖并实现完整序列化</ID>
+    <ID>ForbiddenComment:SearchHistoryManager.kt$SearchHistoryManager$// TODO: 添加 kotlinx-serialization 依赖并实现完整解?</ID>
+    <ID>ForbiddenComment:SettingsScreen.kt$// TODO: 添加模式选择对话?UI</ID>
+    <ID>ForbiddenComment:TelephonyHook.kt$TelephonyHook$// TODO: 注入 PreferencesRepository 或使用静态方法读取</ID>
+    <ID>ForbiddenComment:WifiHook.kt$WifiHook$// TODO: 使用 WifiConfiguration 类创建配置网络</ID>
+    <ID>ForbiddenComment:WifiHook.kt$WifiHook$// TODO: 注入 PreferencesRepository 或使用静态方法读取</ID>
+    <ID>FunctionNaming:AMapView.kt$@Composable fun AMapLifecycleHandler(mapView: MapView?)</ID>
+    <ID>FunctionNaming:AMapView.kt$@Composable fun AMapView( modifier: Modifier = Modifier, onMapReady: ((AMap) -&gt; Unit)? = null, initialLatitude: Double = 39.908823, initialLongitude: Double = 116.397470, zoomLevel: Float = 15f, )</ID>
+    <ID>FunctionNaming:AMapView.kt$@Composable fun MapMarker( latitude: Double, longitude: Double, title: String? = null, snippet: String? = null, draggable: Boolean = true, onClick: (() -&gt; Unit)? = null, map: AMap?, )</ID>
+    <ID>FunctionNaming:AboutScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun AboutScreen(onNavigateBack: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:AddFavoriteDialog.kt$@OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class) @Composable fun AddFavoriteDialog( onDismiss: () -&gt; Unit, onConfirm: (name: String, category: String) -&gt; Unit, )</ID>
+    <ID>FunctionNaming:ApiKeySettingsScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun ApiKeySettingsScreen(onNavigateBack: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:AppNavGraph.kt$@Composable fun AppNavGraph(navController: NavHostController)</ID>
+    <ID>FunctionNaming:BaiduMapView.kt$@Composable fun BaiduMapMarker( latitude: Double, longitude: Double, title: String? = null, snippet: String? = null, draggable: Boolean = true, onClick: (() -&gt; Unit)? = null, baiduMap: BaiduMap?, )</ID>
+    <ID>FunctionNaming:BaiduMapView.kt$@Composable fun BaiduMapView( modifier: Modifier = Modifier, onMapReady: ((BaiduMap) -&gt; Unit)? = null, initialLatitude: Double = 39.908823, initialLongitude: Double = 116.397470, zoomLevel: Float = 15f, )</ID>
+    <ID>FunctionNaming:FavoritesScreen.kt$@Composable private fun FavoriteItem( favorite: FavoriteLocation, onEdit: () -&gt; Unit, onDelete: () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:FavoritesScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun FavoritesScreen(onNavigateBack: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:MainActivity.kt$@Composable fun ErrorScreen( onDismiss: () -&gt; Unit, onConfirm: () -&gt; Unit )</ID>
+    <ID>FunctionNaming:MapScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun MapScreen( onNavigateToSettings: () -&gt; Unit, onNavigateToFavorites: () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:ProfileDialog.kt$@Composable fun ProfileDialog( onDismiss: () -&gt; Unit, onSave: (name: String) -&gt; Unit, onLoad: (name: String) -&gt; Unit, )</ID>
+    <ID>FunctionNaming:SettingsScreen.kt$@Composable private fun SettingSwitchItem( title: String, subtitle: String, checked: Boolean, onCheckedChange: (Boolean) -&gt; Unit, )</ID>
+    <ID>FunctionNaming:SettingsScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun SettingsScreen( onNavigateBack: () -&gt; Unit, onNavigateToApiKeySettings: () -&gt; Unit, )</ID>
+    <ID>FunctionOnlyReturningConstant:LocationApiHooks.kt$LocationApiHooks$private fun shouldFakeLocation(): Boolean</ID>
+    <ID>FunctionOnlyReturningConstant:MainHook.kt$MainHook$private fun isPlaying(): Boolean</ID>
+    <ID>FunctionOnlyReturningConstant:PluginManager.kt$PluginManager$private fun verifyApkSignature(apkFile: File): Boolean</ID>
+    <ID>FunctionOnlyReturningConstant:TelephonyHook.kt$TelephonyHook$private fun isFakeCellEnabled(): Boolean</ID>
+    <ID>FunctionOnlyReturningConstant:TelephonyHook.kt$private fun createCdmaCellLocation(fakeInfo: com.steadywj.wjfakelocation.data.model.FakeCellInfo): android.telephony.CellLocation?</ID>
+    <ID>FunctionOnlyReturningConstant:TelephonyHook.kt$private fun createNrCellLocation(fakeInfo: com.steadywj.wjfakelocation.data.model.FakeCellInfo): android.telephony.CellLocation?</ID>
+    <ID>FunctionOnlyReturningConstant:TelephonyHook.kt$private fun createTdscdmaCellLocation(fakeInfo: com.steadywj.wjfakelocation.data.model.FakeCellInfo): android.telephony.CellLocation?</ID>
+    <ID>FunctionOnlyReturningConstant:TelephonyHook.kt$private fun createWcdmaCellLocation(fakeInfo: com.steadywj.wjfakelocation.data.model.FakeCellInfo): android.telephony.CellLocation?</ID>
+    <ID>FunctionOnlyReturningConstant:WifiHook.kt$WifiHook$private fun isFakeWifiEnabled(): Boolean</ID>
+    <ID>ImplicitDefaultLocale:PerformanceMonitor.kt$PerformanceMonitor$String.format( "%.2f", timings.average(), )</ID>
+    <ID>ImplicitDefaultLocale:PerformanceMonitor.kt$PerformanceMonitor$String.format("%.1f", bytes / (1024.0 * 1024.0 * 1024.0))</ID>
+    <ID>ImplicitDefaultLocale:PerformanceMonitor.kt$PerformanceMonitor$String.format("%.1f", bytes / (1024.0 * 1024.0))</ID>
+    <ID>ImplicitDefaultLocale:PerformanceMonitor.kt$PerformanceMonitor$String.format("%.1f", bytes / 1024.0)</ID>
+    <ID>ImplicitDefaultLocale:PerformanceMonitor.kt$PerformanceMonitor$String.format("%.1f", metrics.memoryUsagePercent)</ID>
+    <ID>ImplicitDefaultLocale:PerformanceMonitor.kt$PerformanceMonitor$String.format("%.2f", duration)</ID>
+    <ID>ImplicitDefaultLocale:PerformanceMonitor.kt$PerformanceMonitor$String.format("%.2f", frameTimeMs)</ID>
+    <ID>ImplicitDefaultLocale:PerformanceMonitor.kt$PerformanceMonitor$String.format("%.2f", metrics.averageFrameTime)</ID>
+    <ID>ImplicitDefaultLocale:PerformanceMonitor.kt$PerformanceMonitor$String.format("%.2f", metrics.networkStats.averageLatency)</ID>
+    <ID>ImplicitDefaultLocale:PerformanceMonitor.kt$PerformanceMonitor$String.format("%.2f", timings.maxOrNull() ?: 0)</ID>
+    <ID>ImplicitDefaultLocale:WifiHook.kt$WifiHook$String.format("%02X", (Math.random() * 256).toInt())</ID>
+    <ID>InvalidPackageDeclaration:AMapManager.kt$package com.steadywj.wjfakelocation.manager.map.utils</ID>
+    <ID>InvalidPackageDeclaration:AMapView.kt$package com.steadywj.wjfakelocation.manager.map.components</ID>
+    <ID>InvalidPackageDeclaration:AddFavoriteDialog.kt$package com.steadywj.wjfakelocation.manager.favorites.components</ID>
+    <ID>InvalidPackageDeclaration:BaiduMapManager.kt$package com.steadywj.wjfakelocation.manager.map.utils</ID>
+    <ID>InvalidPackageDeclaration:BaiduMapManagerTest.kt$package com.steadywj.wjfakelocation.domain.service</ID>
+    <ID>InvalidPackageDeclaration:BaiduMapView.kt$package com.steadywj.wjfakelocation.manager.map.components</ID>
+    <ID>InvalidPackageDeclaration:DataModelTest.kt$package com.steadywj.wjfakelocation.domain.service</ID>
+    <ID>InvalidPackageDeclaration:FavoritesViewModel.kt$package com.steadywj.wjfakelocation.manager.favorites.viewmodel</ID>
+    <ID>InvalidPackageDeclaration:LocationUtil.kt$package com.steadywj.wjfakelocation.xposed.utils</ID>
+    <ID>InvalidPackageDeclaration:MapCacheManager.kt$package com.steadywj.wjfakelocation.manager.map.utils</ID>
+    <ID>InvalidPackageDeclaration:MapInteractionManager.kt$package com.steadywj.wjfakelocation.manager.map.utils</ID>
+    <ID>InvalidPackageDeclaration:MapViewModel.kt$package com.steadywj.wjfakelocation.manager.map.viewmodel</ID>
+    <ID>InvalidPackageDeclaration:OfflineMapManager.kt$package com.steadywj.wjfakelocation.manager.map.utils</ID>
+    <ID>InvalidPackageDeclaration:PreferencesUtil.kt$package com.steadywj.wjfakelocation.xposed.utils</ID>
+    <ID>InvalidPackageDeclaration:ProfileDialog.kt$package com.steadywj.wjfakelocation.manager.settings.components</ID>
+    <ID>InvalidPackageDeclaration:SettingsViewModel.kt$package com.steadywj.wjfakelocation.manager.settings.viewmodel</ID>
+    <ID>LongMethod:AddFavoriteDialog.kt$@OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class) @Composable fun AddFavoriteDialog( onDismiss: () -&gt; Unit, onConfirm: (name: String, category: String) -&gt; Unit, )</ID>
+    <ID>LongMethod:ApiKeySettingsScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun ApiKeySettingsScreen(onNavigateBack: () -&gt; Unit)</ID>
+    <ID>LongMethod:FavoritesScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun FavoritesScreen(onNavigateBack: () -&gt; Unit)</ID>
+    <ID>LongMethod:KmlParser.kt$KmlParser$fun parse(inputStream: InputStream): KmlDocument</ID>
+    <ID>LongMethod:LocationApiHooks.kt$LocationApiHooks$private fun hookLocation(classLoader: ClassLoader)</ID>
+    <ID>LongMethod:ProfileDialog.kt$@Composable fun ProfileDialog( onDismiss: () -&gt; Unit, onSave: (name: String) -&gt; Unit, onLoad: (name: String) -&gt; Unit, )</ID>
+    <ID>LongMethod:SettingsScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun SettingsScreen( onNavigateBack: () -&gt; Unit, onNavigateToApiKeySettings: () -&gt; Unit, )</ID>
+    <ID>LongParameterList:AMapView.kt$( latitude: Double, longitude: Double, title: String? = null, snippet: String? = null, draggable: Boolean = true, onClick: (() -&gt; Unit)? = null, map: AMap?, )</ID>
+    <ID>LongParameterList:BaiduMapView.kt$( latitude: Double, longitude: Double, title: String? = null, snippet: String? = null, draggable: Boolean = true, onClick: (() -&gt; Unit)? = null, baiduMap: BaiduMap?, )</ID>
+    <ID>MagicNumber:AIService.kt$AIService$0.3</ID>
+    <ID>MagicNumber:AIService.kt$AIService$0.5</ID>
+    <ID>MagicNumber:AIService.kt$AIService$0.6</ID>
+    <ID>MagicNumber:AIService.kt$AIService$0.8</ID>
+    <ID>MagicNumber:AIService.kt$AIService$10.0</ID>
+    <ID>MagicNumber:AIService.kt$AIService$100.0</ID>
+    <ID>MagicNumber:AIService.kt$AIService$17</ID>
+    <ID>MagicNumber:AIService.kt$AIService$19</ID>
+    <ID>MagicNumber:AIService.kt$AIService$24</ID>
+    <ID>MagicNumber:AIService.kt$AIService$3600000</ID>
+    <ID>MagicNumber:AIService.kt$AIService$5</ID>
+    <ID>MagicNumber:AIService.kt$AIService$5000.0</ID>
+    <ID>MagicNumber:AIService.kt$AIService$6</ID>
+    <ID>MagicNumber:AIService.kt$AIService$6371000.0</ID>
+    <ID>MagicNumber:AIService.kt$AIService$7</ID>
+    <ID>MagicNumber:AIService.kt$AIService$86400000</ID>
+    <ID>MagicNumber:AIService.kt$AIService$9</ID>
+    <ID>MagicNumber:AMapManager.kt$AMapManager$0.00669342162296594323</ID>
+    <ID>MagicNumber:AMapManager.kt$AMapManager$0.1</ID>
+    <ID>MagicNumber:AMapManager.kt$AMapManager$0.2</ID>
+    <ID>MagicNumber:AMapManager.kt$AMapManager$100.0</ID>
+    <ID>MagicNumber:AMapManager.kt$AMapManager$105.0</ID>
+    <ID>MagicNumber:AMapManager.kt$AMapManager$12.0</ID>
+    <ID>MagicNumber:AMapManager.kt$AMapManager$150.0</ID>
+    <ID>MagicNumber:AMapManager.kt$AMapManager$160.0</ID>
+    <ID>MagicNumber:AMapManager.kt$AMapManager$180.0</ID>
+    <ID>MagicNumber:AMapManager.kt$AMapManager$20.0</ID>
+    <ID>MagicNumber:AMapManager.kt$AMapManager$3.0</ID>
+    <ID>MagicNumber:AMapManager.kt$AMapManager$30.0</ID>
+    <ID>MagicNumber:AMapManager.kt$AMapManager$300.0</ID>
+    <ID>MagicNumber:AMapManager.kt$AMapManager$320</ID>
+    <ID>MagicNumber:AMapManager.kt$AMapManager$35.0</ID>
+    <ID>MagicNumber:AMapManager.kt$AMapManager$40.0</ID>
+    <ID>MagicNumber:AMapManager.kt$AMapManager$6.0</ID>
+    <ID>MagicNumber:AMapManager.kt$AMapManager$6378245.0</ID>
+    <ID>MagicNumber:ApiKeySettingsScreen.kt$2000</ID>
+    <ID>MagicNumber:BaiduMapManager.kt$BaiduMapManager$0.000003</ID>
+    <ID>MagicNumber:BaiduMapManager.kt$BaiduMapManager$0.00002</ID>
+    <ID>MagicNumber:BaiduMapManager.kt$BaiduMapManager$0.006</ID>
+    <ID>MagicNumber:BaiduMapManager.kt$BaiduMapManager$0.0065</ID>
+    <ID>MagicNumber:BaiduMapManager.kt$BaiduMapManager$180.0</ID>
+    <ID>MagicNumber:BaiduMapManager.kt$BaiduMapManager$3000.0</ID>
+    <ID>MagicNumber:CompassOverlay.kt$CompassOverlay$0.5f</ID>
+    <ID>MagicNumber:FavoritesScreen.kt$2000</ID>
+    <ID>MagicNumber:FavoritesViewModel.kt$FavoritesViewModel$5000</ID>
+    <ID>MagicNumber:GpxParser.kt$TrackSegment$6371000.0</ID>
+    <ID>MagicNumber:KmlParser.kt$KmlDocument$6371000.0</ID>
+    <ID>MagicNumber:LocationUtil.kt$LocationUtil$0.00669342162296594323</ID>
+    <ID>MagicNumber:LocationUtil.kt$LocationUtil$0.1</ID>
+    <ID>MagicNumber:LocationUtil.kt$LocationUtil$0.2</ID>
+    <ID>MagicNumber:LocationUtil.kt$LocationUtil$10.0f</ID>
+    <ID>MagicNumber:LocationUtil.kt$LocationUtil$100.0</ID>
+    <ID>MagicNumber:LocationUtil.kt$LocationUtil$105.0</ID>
+    <ID>MagicNumber:LocationUtil.kt$LocationUtil$111000.0</ID>
+    <ID>MagicNumber:LocationUtil.kt$LocationUtil$116.4074</ID>
+    <ID>MagicNumber:LocationUtil.kt$LocationUtil$12.0</ID>
+    <ID>MagicNumber:LocationUtil.kt$LocationUtil$150.0</ID>
+    <ID>MagicNumber:LocationUtil.kt$LocationUtil$160.0</ID>
+    <ID>MagicNumber:LocationUtil.kt$LocationUtil$180.0</ID>
+    <ID>MagicNumber:LocationUtil.kt$LocationUtil$20.0</ID>
+    <ID>MagicNumber:LocationUtil.kt$LocationUtil$3.0</ID>
+    <ID>MagicNumber:LocationUtil.kt$LocationUtil$30.0</ID>
+    <ID>MagicNumber:LocationUtil.kt$LocationUtil$300.0</ID>
+    <ID>MagicNumber:LocationUtil.kt$LocationUtil$320</ID>
+    <ID>MagicNumber:LocationUtil.kt$LocationUtil$35.0</ID>
+    <ID>MagicNumber:LocationUtil.kt$LocationUtil$39.9042</ID>
+    <ID>MagicNumber:LocationUtil.kt$LocationUtil$40.0</ID>
+    <ID>MagicNumber:LocationUtil.kt$LocationUtil$50.0</ID>
+    <ID>MagicNumber:LocationUtil.kt$LocationUtil$6.0</ID>
+    <ID>MagicNumber:LocationUtil.kt$LocationUtil$6378245.0</ID>
+    <ID>MagicNumber:MapCacheManager.kt$MapCacheManager$100</ID>
+    <ID>MagicNumber:MapCacheManager.kt$MapCacheManager$1024</ID>
+    <ID>MagicNumber:MapCacheManager.kt$MapCacheManager$256</ID>
+    <ID>MagicNumber:MapCacheManager.kt$MapCacheManager$8</ID>
+    <ID>MagicNumber:MapCacheManager.kt$MapCacheManager.&lt;no name provided&gt;$1024</ID>
+    <ID>MagicNumber:MapInteractionManager.kt$MapInteractionManager$6371000.0</ID>
+    <ID>MagicNumber:MapInteractionManager.kt$MapInteractionManager.&lt;no name provided&gt;$18f</ID>
+    <ID>MagicNumber:MapInteractionManager.kt$MapInteractionManager.&lt;no name provided&gt;$3f</ID>
+    <ID>MagicNumber:MapInteractionManager.kt$MapInteractionManager.&lt;no name provided&gt;$50</ID>
+    <ID>MagicNumber:MapProvider.kt$BaiduMapProvider$0.000003</ID>
+    <ID>MagicNumber:MapProvider.kt$BaiduMapProvider$0.00002</ID>
+    <ID>MagicNumber:MapProvider.kt$BaiduMapProvider$0.006</ID>
+    <ID>MagicNumber:MapProvider.kt$BaiduMapProvider$0.0065</ID>
+    <ID>MagicNumber:MapProvider.kt$BaiduMapProvider$180.0</ID>
+    <ID>MagicNumber:MapProvider.kt$BaiduMapProvider$3000.0</ID>
+    <ID>MagicNumber:MapScreen.kt$116.4074</ID>
+    <ID>MagicNumber:MapScreen.kt$14f</ID>
+    <ID>MagicNumber:MapScreen.kt$39.9042</ID>
+    <ID>MagicNumber:MapViewModel.kt$MapViewModel$500L</ID>
+    <ID>MagicNumber:OfflineMapManager.kt$OfflineMapManager$10000</ID>
+    <ID>MagicNumber:OfflineMapManager.kt$OfflineMapManager$1024</ID>
+    <ID>MagicNumber:OfflineMapManager.kt$OfflineMapManager$180.0</ID>
+    <ID>MagicNumber:OfflineMapManager.kt$OfflineMapManager$360.0</ID>
+    <ID>MagicNumber:OfflineMapManager.kt$OfflineMapManager$4</ID>
+    <ID>MagicNumber:OfflineMapManager.kt$OfflineMapManager$500L</ID>
+    <ID>MagicNumber:PathPlayer.kt$PathPlayer$0.5f</ID>
+    <ID>MagicNumber:PathPlayer.kt$PathPlayer$100</ID>
+    <ID>MagicNumber:PathPlayer.kt$PathPlayer$1000</ID>
+    <ID>MagicNumber:PathPlayer.kt$PathPlayer$20.0f</ID>
+    <ID>MagicNumber:PathPlayer.kt$PathPlayer$5000</ID>
+    <ID>MagicNumber:PathPlayer.kt$PathPlayer$6371000.0</ID>
+    <ID>MagicNumber:PerformanceMonitor.kt$PerformanceMonitor$10</ID>
+    <ID>MagicNumber:PerformanceMonitor.kt$PerformanceMonitor$100</ID>
+    <ID>MagicNumber:PerformanceMonitor.kt$PerformanceMonitor$1000</ID>
+    <ID>MagicNumber:PerformanceMonitor.kt$PerformanceMonitor$1000.0</ID>
+    <ID>MagicNumber:PerformanceMonitor.kt$PerformanceMonitor$1024</ID>
+    <ID>MagicNumber:PerformanceMonitor.kt$PerformanceMonitor$1024.0</ID>
+    <ID>MagicNumber:PerformanceMonitor.kt$PerformanceMonitor$16.67</ID>
+    <ID>MagicNumber:PerformanceMonitor.kt$PerformanceMonitor$1_000_000.0</ID>
+    <ID>MagicNumber:PerformanceMonitor.kt$PerformanceMonitor$60</ID>
+    <ID>MagicNumber:PoiSearchManager.kt$PoiSearchManager$20</ID>
+    <ID>MagicNumber:PreferencesRepository.kt$PreferencesRepository$16</ID>
+    <ID>MagicNumber:PreferencesUtil.kt$PreferencesUtil$10.0f</ID>
+    <ID>MagicNumber:PreferencesUtil.kt$PreferencesUtil$50.0f</ID>
+    <ID>MagicNumber:SearchHistoryManager.kt$SearchHistoryManager$0.2</ID>
+    <ID>MagicNumber:SearchHistoryManager.kt$SearchHistoryManager$0.4</ID>
+    <ID>MagicNumber:SearchHistoryManager.kt$SearchHistoryManager$0.6</ID>
+    <ID>MagicNumber:SearchHistoryManager.kt$SearchHistoryManager$0.8</ID>
+    <ID>MagicNumber:SearchHistoryManager.kt$SearchHistoryManager$10</ID>
+    <ID>MagicNumber:SearchHistoryManager.kt$SearchHistoryManager$1000L</ID>
+    <ID>MagicNumber:SearchHistoryManager.kt$SearchHistoryManager$168</ID>
+    <ID>MagicNumber:SearchHistoryManager.kt$SearchHistoryManager$24</ID>
+    <ID>MagicNumber:SearchHistoryManager.kt$SearchHistoryManager$3</ID>
+    <ID>MagicNumber:SearchHistoryManager.kt$SearchHistoryManager$50</ID>
+    <ID>MagicNumber:SearchHistoryManager.kt$SearchHistoryManager$60</ID>
+    <ID>MagicNumber:SearchHistoryManager.kt$SearchHistoryManager$720</ID>
+    <ID>MagicNumber:SettingsScreen.kt$2000</ID>
+    <ID>MagicNumber:TelephonyHook.kt$TelephonyHook$460</ID>
+    <ID>MagicNumber:TelephonyHook.kt$TelephonyHook.&lt;no name provided&gt;$15</ID>
+    <ID>MagicNumber:TelephonyHook.kt$TelephonyHook.&lt;no name provided&gt;$20</ID>
+    <ID>MagicNumber:TelephonyHook.kt$TelephonyHook.&lt;no name provided&gt;$31</ID>
+    <ID>MagicNumber:TelephonyHook.kt$TelephonyHook.&lt;no name provided&gt;$4</ID>
+    <ID>MagicNumber:TelephonyHook.kt$TelephonyHook.&lt;no name provided&gt;$5</ID>
+    <ID>MagicNumber:TelephonyHook.kt$TelephonyHook.&lt;no name provided&gt;$75</ID>
+    <ID>MagicNumber:WifiHook.kt$WifiHook$1000</ID>
+    <ID>MagicNumber:WifiHook.kt$WifiHook$2437</ID>
+    <ID>MagicNumber:WifiHook.kt$WifiHook$256</ID>
+    <ID>MagicNumber:WifiHook.kt$WifiHook$3</ID>
+    <ID>MagicNumber:WifiHook.kt$WifiHook$300</ID>
+    <ID>MagicNumber:WifiHook.kt$WifiHook$50</ID>
+    <ID>MagicNumber:WifiHook.kt$WifiHook$5180</ID>
+    <ID>MagicNumber:WifiHook.kt$WifiHook$5955</ID>
+    <ID>MagicNumber:WifiHook.kt$WifiHook$6</ID>
+    <ID>MaxLineLength:AMapManager.kt$AMapManager$var ret = -100.0 + 2.0 * lng + 3.0 * lat + 0.2 * lat * lat + 0.1 * lng * lat + 0.2 * Math.sqrt(Math.abs(lng))</ID>
+    <ID>MaxLineLength:LocationUtil.kt$LocationUtil$val finalLat = lat + (dLat * 180.0) / ((6378245.0 * (1 - 0.00669342162296594323)) / (magic * sqrtMagic) * Math.PI)</ID>
+    <ID>MaxLineLength:OfflineMapManager.kt$OfflineMapManager$val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? android.net.ConnectivityManager</ID>
+    <ID>MaxLineLength:OfflineMapManager.kt$OfflineMapManager$val url = "https://webrd0${(x + y) % 4 + 1}.is.autonavi.com/appmaptile?lang=zh_cn&amp;size=1&amp;scale=1&amp;style=7&amp;x=$x&amp;y=$y&amp;z=$zoom"</ID>
+    <ID>MaxLineLength:PerformanceMonitor.kt$PerformanceMonitor$successfulRequests = if (success) networkStats.successfulRequests + 1 else networkStats.successfulRequests</ID>
+    <ID>MaxLineLength:PreferencesRepository.kt$PreferencesRepository$private val prefs: SharedPreferences = context.getSharedPreferences("wjfakelocation_prefs", Context.MODE_WORLD_READABLE)</ID>
+    <ID>MaxLineLength:PreferencesRepository.kt$PreferencesRepository$targetMode = TargetMode.valueOf(prefs.getString("target_mode", TargetMode.GLOBAL.name) ?: TargetMode.GLOBAL.name)</ID>
+    <ID>MaxLineLength:SystemServicesHooks.kt$SystemServicesHooks$val locationManagerServiceClass = XposedHelpers.findClass("com.android.server.LocationManagerService", classLoader)</ID>
+    <ID>MaxLineLength:SystemServicesHooks.kt$SystemServicesHooks.&lt;no name provided&gt;$XposedBridge.log("$tag [SystemHook] Entered method getLastLocation(locationRequest, packageName)")</ID>
+    <ID>MaxLineLength:SystemServicesHooks.kt$SystemServicesHooks.&lt;no name provided&gt;$val fakeLocation = LocationUtil.createFakeLocation((param.args[0] as? Location)?.provider ?: "gps")</ID>
+    <ID>MaxLineLength:TelephonyHook.kt$TelephonyHook$com.steadywj.wjfakelocation.data.model.CellType.TDSCDMA -&gt; createTdscdmaCellInfo(fakeInfo, index == 0)</ID>
+    <ID>MaxLineLength:TelephonyHook.kt$TelephonyHook$com.steadywj.wjfakelocation.data.model.CellType.WCDMA -&gt; createWcdmaCellInfo(fakeInfo, index == 0)</ID>
+    <ID>MaxLineLength:TelephonyHook.kt$TelephonyHook.&lt;no name provided&gt;$else -&gt; de.robv.android.xposed.XposedBridge.invokeOriginalMethod(param.method, param.thisObject, param.args)</ID>
+    <ID>MaxLineLength:TelephonyHook.kt$TelephonyHook.&lt;no name provided&gt;$return de.robv.android.xposed.XposedBridge.invokeOriginalMethod(param.method, param.thisObject, param.args)</ID>
+    <ID>MaxLineLength:TelephonyHook.kt$private</ID>
+    <ID>NestedBlockDepth:GpxParser.kt$GpxParser$fun parse(inputStream: InputStream): List&lt;TrackSegment&gt;</ID>
+    <ID>NestedBlockDepth:KmlParser.kt$KmlParser$fun parse(inputStream: InputStream): KmlDocument</ID>
+    <ID>NestedBlockDepth:OfflineMapManager.kt$OfflineMapManager$fun getDownloadedAreas(): List&lt;OfflineArea&gt;</ID>
+    <ID>ReturnCount:AIService.kt$AIService$suspend fun checkAutoTrigger(currentLocation: Location): AutoTriggerResult?</ID>
+    <ID>ReturnCount:OfflineMapManager.kt$OfflineMapManager$private fun getFileSize(file: File): Long</ID>
+    <ID>ReturnCount:PathPlayer.kt$PathPlayer$fun getRemainingTimeSeconds(): Long</ID>
+    <ID>ReturnCount:PreferencesRepository.kt$PreferencesRepository$private fun deserializeSettings(data: String): LocationSettings?</ID>
+    <ID>ReturnCount:TelephonyHook.kt$TelephonyHook.&lt;no name provided&gt;$@Throws(Throwable::class) override fun replaceHookedMethod(param: MethodHookParam): Any?</ID>
+    <ID>ReturnCount:WifiHook.kt$WifiHook.&lt;no name provided&gt;$@Throws(Throwable::class) override fun replaceHookedMethod(param: MethodHookParam): Any?</ID>
+    <ID>SwallowedException:CompassOverlay.kt$CompassOverlay$e: Exception</ID>
+    <ID>SwallowedException:GpxParser.kt$GpxParser$e: Exception</ID>
+    <ID>SwallowedException:KmlParser.kt$KmlParser$e: Exception</ID>
+    <ID>SwallowedException:MapCacheManager.kt$MapCacheManager$e: Exception</ID>
+    <ID>SwallowedException:MapInteractionManager.kt$MapInteractionManager$e: Exception</ID>
+    <ID>SwallowedException:PluginManager.kt$PluginManager$e: Exception</ID>
+    <ID>SwallowedException:PoiSearchManager.kt$PoiSearchManager$e: Exception</ID>
+    <ID>SwallowedException:PreferencesRepository.kt$PreferencesRepository$e: Exception</ID>
+    <ID>SwallowedException:SearchHistoryManager.kt$SearchHistoryManager$e: Exception</ID>
+    <ID>SwallowedException:TelephonyHook.kt$TelephonyHook$e: Throwable</ID>
+    <ID>TooGenericExceptionCaught:BaiduMapManager.kt$BaiduMapManager$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:BaiduMapManager.kt$BaiduMapManager.&lt;no name provided&gt;$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:CloudSyncService.kt$CloudSyncService$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:CompassOverlay.kt$CompassOverlay$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:GpxParser.kt$GpxParser$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:KmlParser.kt$KmlParser$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:LocationApiHooks.kt$LocationApiHooks$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:MainActivity.kt$MainActivity$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:MainHook.kt$MainHook$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:MapCacheManager.kt$MapCacheManager$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:MapInteractionManager.kt$MapInteractionManager$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:MapViewModel.kt$MapViewModel$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:OfflineMapManager.kt$OfflineMapManager$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:PluginManager.kt$PluginManager$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:PoiSearchManager.kt$PoiSearchManager$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:PreferencesRepository.kt$PreferencesRepository$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:PreferencesUtil.kt$PreferencesUtil$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:SearchHistoryManager.kt$SearchHistoryManager$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:SystemServicesHooks.kt$SystemServicesHooks$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:TelephonyHook.kt$TelephonyHook$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:TelephonyHook.kt$TelephonyHook$e: Throwable</ID>
+    <ID>TooGenericExceptionCaught:TelephonyHook.kt$TelephonyHook.&lt;no name provided&gt;$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:WJFakeLocationApplication.kt$WJFakeLocationApplication$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:WifiHook.kt$WifiHook$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:WifiHook.kt$WifiHook$e: Throwable</ID>
+    <ID>TooGenericExceptionCaught:WifiHook.kt$WifiHook.&lt;no name provided&gt;$e: Exception</ID>
+    <ID>TooGenericExceptionThrown:OfflineMapManager.kt$OfflineMapManager$throw Exception("存储空间不足")</ID>
+    <ID>TooGenericExceptionThrown:PluginManager.kt$PluginManager$throw Exception("无法解析 APK 信息")</ID>
+    <ID>TooManyFunctions:AIService.kt$AIService</ID>
+    <ID>TooManyFunctions:OfflineMapManager.kt$OfflineMapManager</ID>
+    <ID>TooManyFunctions:PathPlayer.kt$PathPlayer</ID>
+    <ID>TooManyFunctions:PerformanceMonitor.kt$PerformanceMonitor</ID>
+    <ID>TooManyFunctions:PreferencesRepository.kt$PreferencesRepository</ID>
+    <ID>TooManyFunctions:PreferencesUtil.kt$PreferencesUtil</ID>
+    <ID>TooManyFunctions:TelephonyHook.kt$TelephonyHook : IXposedHookLoadPackage</ID>
+    <ID>TooManyFunctions:WJLogger.kt$WJLogger</ID>
+    <ID>UnusedParameter:AMapManager.kt$AMapManager$context: Context</ID>
+    <ID>UnusedParameter:CloudSyncService.kt$CloudSyncService$intervalMs: Long = 3600000</ID>
+    <ID>UnusedParameter:MapInteractionManager.kt$MapInteractionManager$marker: Marker</ID>
+    <ID>UnusedParameter:MapInteractionManager.kt$onMarkerMoved: ((LatLng) -&gt; Unit)? = null</ID>
+    <ID>UnusedParameter:MapScreen.kt$onNavigateToFavorites: () -&gt; Unit</ID>
+    <ID>UnusedParameter:MapScreen.kt$onNavigateToSettings: () -&gt; Unit</ID>
+    <ID>UnusedParameter:PerformanceMonitor.kt$PerformanceMonitor$endpoint: String</ID>
+    <ID>UnusedParameter:PerformanceMonitor.kt$PerformanceMonitor$methodName: String</ID>
+    <ID>UnusedParameter:PluginManager.kt$PluginManager$apkFile: File</ID>
+    <ID>UnusedParameter:PluginManager.kt$PluginManager$params: Map&lt;String, Any&gt;</ID>
+    <ID>UnusedParameter:TelephonyHook.kt$TelephonyHook$lpparam: XC_LoadPackage.LoadPackageParam</ID>
+    <ID>UnusedParameter:TelephonyHook.kt$fakeInfo: com.steadywj.wjfakelocation.data.model.FakeCellInfo</ID>
+    <ID>UnusedPrivateClass:TelephonyHook.kt$TelephonyHook$CellType</ID>
+    <ID>UnusedPrivateMember:CloudSyncService.kt$CloudSyncService$private fun mergeFavorites( local: List&lt;FavoriteLocation&gt;, cloud: List&lt;FavoriteLocationDto&gt; ): List&lt;FavoriteLocationDto&gt;</ID>
+    <ID>UnusedPrivateMember:PreferencesRepository.kt$PreferencesRepository$private fun serializeSettings(settings: LocationSettings): String</ID>
+    <ID>UnusedPrivateProperty:AIService.kt$AIService$private val context: Context</ID>
+    <ID>UnusedPrivateProperty:AIService.kt$AIService$private val favoritesRepository: FavoritesRepository</ID>
+    <ID>UnusedPrivateProperty:AIService.kt$AIService$val topCategory = categoryCount.maxByOrNull { it.value }?.key ?: "default"</ID>
+    <ID>UnusedPrivateProperty:BaiduMapManager.kt$BaiduMapManager$private val context: Context</ID>
+    <ID>UnusedPrivateProperty:CloudSyncService.kt$CloudSyncService$private val preferencesRepository: PreferencesRepository</ID>
+    <ID>UnusedPrivateProperty:DataModelTest.kt$DataModelTest$val cellInfo = FakeCellInfo( name = "Test Cell", type = com.steadywj.wjfakelocation.data.model.CellType.LTE, mcc = "460", mnc = "0", lac = 12345, cid = 67890, enabled = true, )</ID>
+    <ID>UnusedPrivateProperty:FavoritesScreen.kt$var searchQuery by remember { mutableStateOf("") }</ID>
+    <ID>UnusedPrivateProperty:MapCacheManager.kt$MapCacheManager$/** 单个瓦片大小?56x256?*/ private val TILE_SIZE = 256</ID>
+    <ID>UnusedPrivateProperty:MapCacheManager.kt$MapCacheManager$/** 磁盘缓存最大大小（100MB?*/ private val DISK_CACHE_MAX_SIZE = 100 * 1024 * 1024 // 100MB</ID>
+    <ID>UnusedPrivateProperty:MapCacheManager.kt$OfflineTileProvider$private val cacheManager: MapCacheManager</ID>
+    <ID>UnusedPrivateProperty:MapScreen.kt$val viewModel: MapViewModel = hiltViewModel()</ID>
+    <ID>UnusedPrivateProperty:MapViewModel.kt$MapViewModel$private val aMapManager: AMapManager</ID>
+    <ID>UnusedPrivateProperty:MapViewModel.kt$MapViewModel$private val favoritesRepository: FavoritesRepository</ID>
+    <ID>UnusedPrivateProperty:SearchHistoryManager.kt$SearchHistoryManager$val content = historyFile.readText()</ID>
+    <ID>UnusedPrivateProperty:SettingsScreen.kt$var showAccuracyDialog by remember { mutableStateOf(false) }</ID>
+    <ID>UnusedPrivateProperty:SettingsScreen.kt$var showAltitudeDialog by remember { mutableStateOf(false) }</ID>
+    <ID>UnusedPrivateProperty:SettingsScreen.kt$var showRandomizeDialog by remember { mutableStateOf(false) }</ID>
+    <ID>UnusedPrivateProperty:SettingsScreen.kt$var showSpeedDialog by remember { mutableStateOf(false) }</ID>
+    <ID>VariableNaming:MapCacheManager.kt$MapCacheManager$/** 单个瓦片大小?56x256?*/ private val TILE_SIZE = 256</ID>
+    <ID>VariableNaming:MapCacheManager.kt$MapCacheManager$/** 磁盘缓存最大大小（100MB?*/ private val DISK_CACHE_MAX_SIZE = 100 * 1024 * 1024 // 100MB</ID>
+    <ID>VariableNaming:OfflineMapManager.kt$OfflineMapManager$/** 最大存储空间（500MB?*/ private val MAX_STORAGE_BYTES = 500L * 1024 * 1024</ID>
+    <ID>VariableNaming:SearchHistoryManager.kt$SearchHistoryManager$/** 最大历史记录数 */ private val MAX_HISTORY_SIZE = 50</ID>
+    <ID>WildcardImport:AMapView.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:AboutScreen.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:AboutScreen.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:AddFavoriteDialog.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:AddFavoriteDialog.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:AddFavoriteDialog.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:ApiKeySettingsScreen.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:ApiKeySettingsScreen.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:ApiKeySettingsScreen.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:BaiduMapView.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:CompassOverlay.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:FavoriteLocationDao.kt$import androidx.room.*</ID>
+    <ID>WildcardImport:FavoritesScreen.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:FavoritesScreen.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:FavoritesScreen.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:MainActivity.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:MapScreen.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:MapScreen.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:MapScreen.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:ProfileDialog.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:ProfileDialog.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:ProfileDialog.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:SettingsScreen.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:SettingsScreen.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:SettingsScreen.kt$import androidx.compose.runtime.*</ID>
+  </CurrentIssues>
+</SmellBaseline>
