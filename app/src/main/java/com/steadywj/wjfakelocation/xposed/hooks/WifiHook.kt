@@ -8,6 +8,7 @@ import android.os.SystemClock
 import com.steadywj.wjfakelocation.data.model.FakeWifiInfo
 import com.steadywj.wjfakelocation.data.model.SecurityType
 import com.steadywj.wjfakelocation.data.model.WifiBand
+import com.steadywj.wjfakelocation.xposed.common.ProviderHelper
 import de.robv.android.xposed.XC_MethodReplacement
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
@@ -180,6 +181,22 @@ class WifiHook(private val appLpparam: XC_LoadPackage.LoadPackageParam, private 
             }
         }
 
+        if (appLpparam.packageName in listOf("com.alibaba.android.rimet", "com.alibaba.android.rimet.zrhgz") &&
+            ProviderHelper.useDingTalkWifiHook(context)
+        ) {
+            val customScanResult = ScanResult()
+            val ssid = ProviderHelper.getWifiSSID(context)
+            val bssid = ProviderHelper.getWifiBSSID(context)
+            customScanResult.SSID = "\"$ssid\""
+            customScanResult.BSSID = bssid
+            customScanResult.frequency = 2437
+            @Suppress("MagicNumber")
+            customScanResult.level = -45
+            customScanResult.capabilities = "[WPA2-PSK-CCMP][ESS]"
+            customScanResult.timestamp = SystemClock.elapsedRealtime() * 1000
+            fakeWifis.add(0, customScanResult)
+        }
+
         return fakeWifis
     }
 
@@ -217,6 +234,17 @@ class WifiHook(private val appLpparam: XC_LoadPackage.LoadPackageParam, private 
                 WifiBand.GHZ_6 -> 5955
             }
         XposedHelpers.callMethod(wifiInfo, "setFrequency", frequency)
+
+        if (appLpparam.packageName in listOf("com.alibaba.android.rimet", "com.alibaba.android.rimet.zrhgz") &&
+            ProviderHelper.useDingTalkWifiHook(context)
+        ) {
+            val ssid = ProviderHelper.getWifiSSID(context)
+            val bssid = ProviderHelper.getWifiBSSID(context)
+            val mac = ProviderHelper.getWifiMac(context)
+            XposedHelpers.callMethod(wifiInfo, "setSSID", "\"$ssid\"")
+            XposedHelpers.callMethod(wifiInfo, "setBSSID", bssid)
+            XposedHelpers.callMethod(wifiInfo, "setMacAddress", mac)
+        }
 
         return wifiInfo
     }
@@ -293,7 +321,6 @@ class WifiHook(private val appLpparam: XC_LoadPackage.LoadPackageParam, private 
     }
 
     private fun isFakeWifiEnabled(): Boolean {
-        return com.steadywj.wjfakelocation.xposed.common.ProviderHelper
-            .shouldFakePackage(context, appLpparam.packageName)
+        return ProviderHelper.shouldFakePackage(context, appLpparam.packageName)
     }
 }

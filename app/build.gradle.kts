@@ -20,12 +20,12 @@ room {
 
 android {
     namespace = "com.steadywj.wjfakelocation"
-    compileSdk = 35
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.steadywj.wjfakelocation"
         minSdk = 31
-        targetSdk = 35
+        targetSdk = 34
         versionCode = System.getenv("VERSION_CODE")?.toIntOrNull() ?: 1
         versionName = System.getenv("VERSION_NAME") ?: "2.0.0"
 
@@ -39,22 +39,34 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
-
-            // CI/CD 签名配置
-            signingConfig =
-                if (System.getenv("KEYSTORE_PATH") != null) {
-                    signingConfigs.create("release") {
-                        storeFile = file(System.getenv("KEYSTORE_PATH"))
-                        storePassword = System.getenv("RELEASE_KEYSTORE_PASSWORD")
-                            ?: project.findProperty("RELEASE_KEYSTORE_PASSWORD") as String? ?: ""
-                        keyAlias = System.getenv("RELEASE_KEY_ALIAS")
-                            ?: project.findProperty("RELEASE_KEY_ALIAS") as String? ?: ""
-                        keyPassword = System.getenv("RELEASE_KEY_PASSWORD")
-                            ?: project.findProperty("RELEASE_KEY_PASSWORD") as String? ?: ""
-                    }
-                } else {
-                    signingConfigs.getByName("debug")
-                }
+        }
+        debug {
+            signingConfig = signingConfigs.getByName("debug")
+        }
+    }
+    signingConfigs {
+        getByName("debug") {
+            enableV1Signing = true
+            enableV2Signing = true
+            enableV3Signing = true
+            enableV4Signing = true
+        }
+        create("release") {
+            if (System.getenv("KEYSTORE_PATH") != null) {
+                storeFile = file(System.getenv("KEYSTORE_PATH")!!)
+                storePassword = System.getenv("RELEASE_KEYSTORE_PASSWORD") ?: ""
+                keyAlias = System.getenv("RELEASE_KEY_ALIAS") ?: ""
+                keyPassword = System.getenv("RELEASE_KEY_PASSWORD") ?: ""
+            } else {
+                storeFile = signingConfigs.getByName("debug").storeFile
+                storePassword = signingConfigs.getByName("debug").storePassword
+                keyAlias = signingConfigs.getByName("debug").keyAlias
+                keyPassword = signingConfigs.getByName("debug").keyPassword
+            }
+            enableV1Signing = true
+            enableV2Signing = true
+            enableV3Signing = true
+            enableV4Signing = true
         }
     }
     compileOptions {

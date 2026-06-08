@@ -161,7 +161,16 @@ fun SettingsScreen(
                         onCheckedChange = { viewModel.updateDingTalkCameraHook(it) },
                     )
 
-                    if (settings.useDingTalkAntiDetect) {
+                    Divider(modifier = Modifier.padding(vertical = 8.dp))
+
+                    SettingSwitchItem(
+                        title = "办公 Wi-Fi 伪装",
+                        subtitle = "全局伪装 SSID 和 MAC 地址，配合经纬度通过打卡机检测",
+                        checked = settings.useDingTalkWifiHook,
+                        onCheckedChange = { viewModel.updateDingTalkWifiHook(it) },
+                    )
+
+                    if (settings.useDingTalkWifiHook) {
                         Divider(modifier = Modifier.padding(vertical = 8.dp))
                         Text(
                             text = "伪装 Wi-Fi 设置",

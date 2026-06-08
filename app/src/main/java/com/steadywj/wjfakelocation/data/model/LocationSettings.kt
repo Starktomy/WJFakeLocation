@@ -26,6 +26,7 @@ data class LocationSettings(
     val useDingTalkAntiDetect: Boolean = false,
     val useDingTalkUpdateHook: Boolean = false,
     val useDingTalkCameraHook: Boolean = false,
+    val useDingTalkWifiHook: Boolean = false,
     val wifiSSID: String = "Spoofed_WiFi",
     val wifiBSSID: String = "00:11:22:33:44:55",
     val wifiMac: String = "00:11:22:33:44:55",

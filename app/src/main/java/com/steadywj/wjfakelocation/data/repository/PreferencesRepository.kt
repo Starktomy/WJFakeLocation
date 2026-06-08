@@ -72,6 +72,7 @@ class PreferencesRepository
                     useDingTalkAntiDetect = prefs.getBoolean("use_dingtalk_anti_detect", false),
                     useDingTalkUpdateHook = prefs.getBoolean("use_dingtalk_update_hook", false),
                     useDingTalkCameraHook = prefs.getBoolean("use_dingtalk_camera_hook", false),
+                    useDingTalkWifiHook = prefs.getBoolean("use_dingtalk_wifi_hook", false),
                     wifiSSID = prefs.getString("wifi_ssid", "Spoofed_WiFi") ?: "Spoofed_WiFi",
                     wifiBSSID = prefs.getString("wifi_bssid", "00:11:22:33:44:55") ?: "00:11:22:33:44:55",
                     wifiMac = prefs.getString("wifi_mac", "00:11:22:33:44:55") ?: "00:11:22:33:44:55",
@@ -144,6 +145,7 @@ class PreferencesRepository
                 putBoolean("use_dingtalk_anti_detect", settings.useDingTalkAntiDetect)
                 putBoolean("use_dingtalk_update_hook", settings.useDingTalkUpdateHook)
                 putBoolean("use_dingtalk_camera_hook", settings.useDingTalkCameraHook)
+                putBoolean("use_dingtalk_wifi_hook", settings.useDingTalkWifiHook)
                 putString("wifi_ssid", settings.wifiSSID)
                 putString("wifi_bssid", settings.wifiBSSID)
                 putString("wifi_mac", settings.wifiMac)
@@ -184,7 +186,7 @@ class PreferencesRepository
                         "${settings.useSpeed}|${settings.speed}|${settings.useSpeedAccuracy}|${settings.speedAccuracy}|" +
                         "${settings.useDingTalkLocationHook}|${settings.useDingTalkAntiDetect}|" +
                         "${settings.useDingTalkUpdateHook}|${settings.useDingTalkCameraHook}|" +
-                        "${settings.wifiSSID}|${settings.wifiBSSID}|${settings.wifiMac}",
+                        "${settings.useDingTalkWifiHook}|${settings.wifiSSID}|${settings.wifiBSSID}|${settings.wifiMac}",
                 )
                 putLong("${profileKey}_timestamp", System.currentTimeMillis())
                 apply()
@@ -208,7 +210,7 @@ class PreferencesRepository
                 "${settings.useSpeed}|${settings.speed}|${settings.useSpeedAccuracy}|${settings.speedAccuracy}|" +
                 "${settings.useDingTalkLocationHook}|${settings.useDingTalkAntiDetect}|" +
                 "${settings.useDingTalkUpdateHook}|${settings.useDingTalkCameraHook}|" +
-                "${settings.wifiSSID}|${settings.wifiBSSID}|${settings.wifiMac}"
+                "${settings.useDingTalkWifiHook}|${settings.wifiSSID}|${settings.wifiBSSID}|${settings.wifiMac}"
         }
 
         @Suppress("TooGenericExceptionCaught", "SwallowedException", "CyclomaticComplexMethod", "ReturnCount")
@@ -238,9 +240,10 @@ class PreferencesRepository
                     useDingTalkAntiDetect = if (parts.size > 17) parts[17].toBoolean() else false,
                     useDingTalkUpdateHook = if (parts.size > 18) parts[18].toBoolean() else false,
                     useDingTalkCameraHook = if (parts.size > 19) parts[19].toBoolean() else false,
-                    wifiSSID = if (parts.size > 20) parts[20] else "Spoofed_WiFi",
-                    wifiBSSID = if (parts.size > 21) parts[21] else "00:11:22:33:44:55",
-                    wifiMac = if (parts.size > 22) parts[22] else "00:11:22:33:44:55",
+                    useDingTalkWifiHook = if (parts.size > 20) parts[20].toBoolean() else false,
+                    wifiSSID = if (parts.size > 21) parts[21] else "Spoofed_WiFi",
+                    wifiBSSID = if (parts.size > 22) parts[22] else "00:11:22:33:44:55",
+                    wifiMac = if (parts.size > 23) parts[23] else "00:11:22:33:44:55",
                 )
             } catch (e: Exception) {
                 return null
