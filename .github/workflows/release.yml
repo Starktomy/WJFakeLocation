@@ -9,6 +9,8 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     
     steps:
       - name: Checkout code
@@ -35,6 +37,9 @@ jobs:
       - name: Build Release APK (without signing)
         run: ./gradlew assembleRelease
       
+      - name: Sign Release APK
+        run: jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 -keystore release.keystore -storepass android app/build/outputs/apk/release/app-release.apk release
+      
       - name: Get version from tag
         id: get_version
         run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
@@ -52,14 +57,10 @@ jobs:
             
             ### 📦 安装包
             - `app-debug.apk` - 调试版本（包含完整日志）
-            - `app-release-unsigned.apk` - 未签名 Release 版本
-            
-            ### ⚠️ 注意事项
-            - Release 版本需要手动签名才能安装
-            - 建议使用Android Studio 或 jarsigner 进行签名
+            - `app-release.apk` - 正式 Release 版本 (已签名，可直接安装)
           files: |
             app/build/outputs/apk/debug/app-debug.apk
-            app/build/outputs/apk/release/app-release-unsigned.apk
+            app/build/outputs/apk/release/app-release.apk
           draft: false
           prerelease: false
         env:
@@ -76,5 +77,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: release-apk
-          path: app/build/outputs/apk/release/app-release-unsigned.apk
+          path: app/build/outputs/apk/release/app-release.apk
           retention-days: 90
