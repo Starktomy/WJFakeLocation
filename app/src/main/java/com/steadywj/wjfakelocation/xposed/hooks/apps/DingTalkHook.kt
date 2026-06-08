@@ -23,10 +23,16 @@ class DingTalkHook : IAppHook {
         appLpparam: XC_LoadPackage.LoadPackageParam,
         context: Context
     ) {
-        hookAMapLocation(appLpparam)
-        hookAMapLatLng(appLpparam)
-        hookEnvironment(appLpparam)
-        hookUpdate(appLpparam)
+        if (ProviderHelper.useDingTalkLocationHook(context)) {
+            hookAMapLocation(appLpparam)
+            hookAMapLatLng(appLpparam)
+        }
+        if (ProviderHelper.useDingTalkAntiDetect(context)) {
+            hookEnvironment(appLpparam)
+        }
+        if (ProviderHelper.useDingTalkUpdateHook(context)) {
+            hookUpdate(appLpparam)
+        }
     }
 
     @Suppress("TooGenericExceptionCaught", "SwallowedException")

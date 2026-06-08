@@ -22,6 +22,9 @@ data class LocationSettings(
     val selectedLocation: SelectedLocation? = null,
     val targetMode: TargetMode = TargetMode.GLOBAL,
     val targetPackages: List<String> = emptyList(),
+    val useDingTalkLocationHook: Boolean = false,
+    val useDingTalkAntiDetect: Boolean = false,
+    val useDingTalkUpdateHook: Boolean = false,
 )
 
 data class SelectedLocation(

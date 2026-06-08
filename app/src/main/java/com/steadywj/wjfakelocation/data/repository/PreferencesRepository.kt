@@ -68,6 +68,9 @@ class PreferencesRepository
                     selectedLocation = getSelectedLocation(),
                     targetMode = TargetMode.valueOf(prefs.getString("target_mode", TargetMode.GLOBAL.name) ?: TargetMode.GLOBAL.name),
                     targetPackages = prefs.getStringSet("target_packages", emptySet())?.toList() ?: emptyList(),
+                    useDingTalkLocationHook = prefs.getBoolean("use_dingtalk_location_hook", false),
+                    useDingTalkAntiDetect = prefs.getBoolean("use_dingtalk_anti_detect", false),
+                    useDingTalkUpdateHook = prefs.getBoolean("use_dingtalk_update_hook", false),
                 )
         }
 
@@ -133,6 +136,9 @@ class PreferencesRepository
                 putFloat("speed_accuracy", settings.speedAccuracy)
                 putString("target_mode", settings.targetMode.name)
                 putStringSet("target_packages", settings.targetPackages.toSet())
+                putBoolean("use_dingtalk_location_hook", settings.useDingTalkLocationHook)
+                putBoolean("use_dingtalk_anti_detect", settings.useDingTalkAntiDetect)
+                putBoolean("use_dingtalk_update_hook", settings.useDingTalkUpdateHook)
                 apply()
             }
             _settings.value = settings
@@ -152,6 +158,7 @@ class PreferencesRepository
         }
 
         // 情景模式支持
+        @Suppress("MaxLineLength")
         suspend fun saveProfile(
             name: String,
             settings: LocationSettings,
@@ -166,7 +173,8 @@ class PreferencesRepository
                         "${settings.useVerticalAccuracy}|${settings.verticalAccuracy}|" +
                         "${settings.useMeanSeaLevel}|${settings.meanSeaLevel}|" +
                         "${settings.useMeanSeaLevelAccuracy}|${settings.meanSeaLevelAccuracy}|" +
-                        "${settings.useSpeed}|${settings.speed}|${settings.useSpeedAccuracy}|${settings.speedAccuracy}",
+                        "${settings.useSpeed}|${settings.speed}|${settings.useSpeedAccuracy}|${settings.speedAccuracy}|" +
+                        "${settings.useDingTalkLocationHook}|${settings.useDingTalkAntiDetect}|${settings.useDingTalkUpdateHook}",
                 )
                 putLong("${profileKey}_timestamp", System.currentTimeMillis())
                 apply()
@@ -179,6 +187,7 @@ class PreferencesRepository
             return deserializeSettings(data)
         }
 
+        @Suppress("MaxLineLength", "UnusedPrivateMember")
         private fun serializeSettings(settings: LocationSettings): String {
             // 保留向后兼容的序列化方法
             return "${settings.useAccuracy}|${settings.accuracy}|${settings.useAltitude}|${settings.altitude}|" +
@@ -186,7 +195,8 @@ class PreferencesRepository
                 "${settings.useVerticalAccuracy}|${settings.verticalAccuracy}|" +
                 "${settings.useMeanSeaLevel}|${settings.meanSeaLevel}|" +
                 "${settings.useMeanSeaLevelAccuracy}|${settings.meanSeaLevelAccuracy}|" +
-                "${settings.useSpeed}|${settings.speed}|${settings.useSpeedAccuracy}|${settings.speedAccuracy}"
+                "${settings.useSpeed}|${settings.speed}|${settings.useSpeedAccuracy}|${settings.speedAccuracy}|" +
+                "${settings.useDingTalkLocationHook}|${settings.useDingTalkAntiDetect}|${settings.useDingTalkUpdateHook}"
         }
 
         private fun deserializeSettings(data: String): LocationSettings? {
@@ -211,6 +221,9 @@ class PreferencesRepository
                     speed = parts[13].toFloatOrNull() ?: 0.0f,
                     useSpeedAccuracy = parts[14].toBoolean(),
                     speedAccuracy = parts[15].toFloatOrNull() ?: 0.0f,
+                    useDingTalkLocationHook = if (parts.size > 16) parts[16].toBoolean() else false,
+                    useDingTalkAntiDetect = if (parts.size > 17) parts[17].toBoolean() else false,
+                    useDingTalkUpdateHook = if (parts.size > 18) parts[18].toBoolean() else false,
                 )
             } catch (e: Exception) {
                 return null

@@ -16,6 +16,7 @@ import javax.inject.Inject
  * 设置 ViewModel
  * 管理设置界面的状态和业务逻辑
  */
+@Suppress("TooManyFunctions")
 @HiltViewModel
 class SettingsViewModel
     @Inject

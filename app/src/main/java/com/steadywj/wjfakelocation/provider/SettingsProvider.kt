@@ -26,7 +26,10 @@ class SettingsProvider : ContentProvider() {
                 "use_randomize",
                 "randomize_radius",
                 "target_mode",
-                "target_packages"
+                "target_packages",
+                "use_dingtalk_location_hook",
+                "use_dingtalk_anti_detect",
+                "use_dingtalk_update_hook"
             )
     }
 

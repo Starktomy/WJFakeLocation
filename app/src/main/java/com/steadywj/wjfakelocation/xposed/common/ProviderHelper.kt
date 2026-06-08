@@ -35,7 +35,10 @@ object ProviderHelper {
             "use_randomize",
             "randomize_radius",
             "target_mode",
-            "target_packages"
+            "target_packages",
+            "use_dingtalk_location_hook",
+            "use_dingtalk_anti_detect",
+            "use_dingtalk_update_hook"
         )
 
     private var isObserverRegistered = false
@@ -207,6 +210,27 @@ object ProviderHelper {
         ensureCache(context)
         synchronized(cache) {
             return cache["target_packages"] as? Set<String> ?: emptySet()
+        }
+    }
+
+    fun useDingTalkLocationHook(context: Context): Boolean {
+        ensureCache(context)
+        synchronized(cache) {
+            return cache["use_dingtalk_location_hook"] as? Boolean ?: false
+        }
+    }
+
+    fun useDingTalkAntiDetect(context: Context): Boolean {
+        ensureCache(context)
+        synchronized(cache) {
+            return cache["use_dingtalk_anti_detect"] as? Boolean ?: false
+        }
+    }
+
+    fun useDingTalkUpdateHook(context: Context): Boolean {
+        ensureCache(context)
+        synchronized(cache) {
+            return cache["use_dingtalk_update_hook"] as? Boolean ?: false
         }
     }
 

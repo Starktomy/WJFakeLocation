@@ -109,6 +109,51 @@ fun SettingsScreen(
                 }
             }
 
+            // 钉钉专项设置分组
+            Card(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+            ) {
+                Column(
+                    modifier = Modifier.padding(16.dp),
+                ) {
+                    Text(
+                        text = "钉钉专项防护",
+                        style = MaterialTheme.typography.titleMedium,
+                    )
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    SettingSwitchItem(
+                        title = "高德地图反溯源",
+                        subtitle = "拦截钉钉内部高德SDK底层经纬度，防安全组件逆向解析",
+                        checked = settings.useDingTalkLocationHook,
+                        onCheckedChange = { viewModel.updateDingTalkLocationHook(it) },
+                    )
+
+                    Divider(modifier = Modifier.padding(vertical = 8.dp))
+
+                    SettingSwitchItem(
+                        title = "环境污染与风控拦截",
+                        subtitle = "剥离模拟器特征，阻断 LBSWUA/DDSEC 真实环境采集",
+                        checked = settings.useDingTalkAntiDetect,
+                        onCheckedChange = { viewModel.updateDingTalkAntiDetect(it) },
+                    )
+
+                    Divider(modifier = Modifier.padding(vertical = 8.dp))
+
+                    SettingSwitchItem(
+                        title = "屏蔽版本强更",
+                        subtitle = "伪装为极高版本，拦截并阻断内部强制更新与升级弹窗",
+                        checked = settings.useDingTalkUpdateHook,
+                        onCheckedChange = { viewModel.updateDingTalkUpdateHook(it) },
+                    )
+                }
+            }
+
             // 情景模式
             Card(
                 modifier =
