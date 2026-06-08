@@ -142,12 +142,55 @@ class DingTalkHook : IAppHook {
         }
     }
 
-    @Suppress("UnusedParameter")
+    @Suppress("TooGenericExceptionCaught", "SwallowedException", "UnusedParameter")
     private fun hookEnvironment(
         appLpparam: XC_LoadPackage.LoadPackageParam,
         context: Context
     ) {
-        // 实现环境污染防护 (DDSEC / LBSWUA)
+        try {
+            // 1. 拦截阿里安全组件 ILBSRiskComponent (绕过 LBSWUA / DDSEC 真实坐标收集)
+            val lbsRiskClass =
+                XposedHelpers.findClassIfExists(
+                    "com.alibaba.wireless.security.open.lbsrisk.ILBSRiskComponent",
+                    appLpparam.classLoader
+                ) ?: XposedHelpers.findClassIfExists(
+                    "com.taobao.wireless.security.sdk.lbsrisk.LBSRiskComponent",
+                    appLpparam.classLoader
+                )
+
+            if (lbsRiskClass != null) {
+                XposedBridge.hookAllMethods(
+                    lbsRiskClass,
+                    "putLocationData",
+                    object : XC_MethodHook() {
+                        override fun beforeHookedMethod(param: MethodHookParam) {
+                            if (!ProviderHelper.isPlaying(context)) return
+                            val loc = param.args[0] as? android.location.Location ?: return
+                            loc.latitude = ProviderHelper.getLatitude(context)
+                            loc.longitude = ProviderHelper.getLongitude(context)
+                        }
+                    }
+                )
+            }
+
+            // 2. 拦截 Wi-Fi 信息 (打卡防篡改不仅查 GPS，还会查 Wi-Fi 的 BSSID)
+            val wifiHook =
+                object : XC_MethodHook() {
+                    override fun afterHookedMethod(param: MethodHookParam) {
+                        if (!ProviderHelper.useDingTalkAntiDetect(context)) return
+                        when (param.method.name) {
+                            "getSSID" -> param.result = "\"Spoofed_WiFi\""
+                            "getBSSID" -> param.result = "00:11:22:33:44:55"
+                            "getMacAddress" -> param.result = "00:11:22:33:44:55"
+                        }
+                    }
+                }
+            XposedBridge.hookAllMethods(android.net.wifi.WifiInfo::class.java, "getSSID", wifiHook)
+            XposedBridge.hookAllMethods(android.net.wifi.WifiInfo::class.java, "getBSSID", wifiHook)
+            XposedBridge.hookAllMethods(android.net.wifi.WifiInfo::class.java, "getMacAddress", wifiHook)
+        } catch (e: Throwable) {
+            // 忽略异常
+        }
     }
 
     @Suppress("UnusedParameter")
