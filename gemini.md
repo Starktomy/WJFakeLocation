@@ -60,10 +60,11 @@ app/src/main/java/com/steadywj/wjfakelocation/
 
 ## 5. 近期改进与稳定化
 项目最近经历了一次重大的稳定化重构阶段：
+*   **跨进程通信 (IPC) 闭环:** 解决了 Hook 层中长期存在的配置硬编码问题。通过在主应用中实现基于 `ContentProvider` 的 `SettingsProvider`，并在 Hook 模块内通过 `ProviderHelper` （带 2 秒级别的内存缓存）进行安全高效的跨进程读取，彻底打通了主应用 UI 控制目标应用内位置伪装、基站伪装及 WiFi 伪装的功能。
 *   **地图 SDK 迁移:** 成功稳定了 AMap 3D SDK 的实现，并移除了已废弃的 2D 依赖。
 *   **Supabase-kt 升级:** 重构了查询语句以匹配 `postgrest-kt` 2.0.0 的语法（例如 `supabase.from("table").select(...) { filter { eq(...) } }`），并通过将数据流获取改写为直接的 DAO 同步查询，解决了 Coroutine `Flow` 的解析问题。
 *   **Android 14 兼容性:** 通过安全地包装 SDK 版本检查，处理了有关 `mslAltitudeMeters` 的严格 `NewApi` lint 错误（API 34）。
-*   **代码质量:** 实现了 100% 符合严格的 `ktlint` 代码风格，并建立了 `detektBaseline` 以强制执行整洁架构规则。
+*   **代码质量与构建稳定性:** 移除了错误的 `useJUnitPlatform()` 配置以修复 Gradle 测试执行器的崩溃，使得测试套件正常运行；更新了 `Mockito` 的参数验证（`any()`）。实现了 100% 符合严格的 `ktlint` 代码风格，解决了所有 `detekt` 的性能或历史遗留问题并强制执行整洁架构规则。
 
 ## 6. 下一步计划与潜在增强
 1.  **AI 服务扩展:** `AIService` 目前包含集成的基础设施。添加具体的 Moonshot/Kimi AI 提示词可以允许用户根据自然语言请求动态生成伪造的“旅行轨迹”。

@@ -287,6 +287,7 @@ cd WJFakeLocation
 - [x] **代码质量工具**（Ktlint + Detekt）
 - [x] **统一日志系统**（Timber + WJLogger）
 - [x] **CI/CD 自动化**（GitHub Release 工作流）
+- [x] **跨进程通信 (IPC)**（ContentProvider 取代配置硬编码，全架构闭环）
 
 ### 进行中 🚧
 - [ ] 情景模式 UI 对话框实现
