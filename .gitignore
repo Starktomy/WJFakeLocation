@@ -42,3 +42,5 @@ logs/
 # ==================== 发布相关 ====================
 release-notes.txt
 upload-archived-artifacts/
+.antigravitycli/
+*.zip

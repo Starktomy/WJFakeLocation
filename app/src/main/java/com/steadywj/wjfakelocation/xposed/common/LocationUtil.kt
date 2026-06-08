@@ -52,28 +52,18 @@ object LocationUtil {
      * 从 SharedPreferences 更新位置设置
      * 这个方法会被频繁调用以确保使用最新设置
      */
-    fun updateLocation() {
-        // TODO: 从 PreferencesRepository 读取最新设置
-        // 这里仅作示例，实际应从加密的 SharedPreferences 读取
+    fun updateLocation(context: android.content.Context) {
+        latitude = ProviderHelper.getLatitude(context)
+        longitude = ProviderHelper.getLongitude(context)
 
-        // 示例：读取上次选中的位置
+        useAccuracy = ProviderHelper.useAccuracy(context)
+        accuracy = ProviderHelper.getAccuracy(context)
 
-        /*
-        val prefs = // 获取 SharedPreferences
-        latitude = prefs.getDouble("selected_latitude", 39.9042)
-        longitude = prefs.getDouble("selected_longitude", 116.4074)
+        useAltitude = ProviderHelper.useAltitude(context)
+        altitude = ProviderHelper.getAltitude(context)
 
-        useAccuracy = prefs.getBoolean("use_accuracy", false)
-        accuracy = prefs.getFloat("accuracy", 10.0f)
-
-        useAltitude = prefs.getBoolean("use_altitude", false)
-        altitude = prefs.getFloat("altitude", 50.0).toDouble()
-
-        useRandomize = prefs.getBoolean("use_randomize", false)
-        randomizeRadius = prefs.getFloat("randomize_radius", 0.0).toDouble()
-
-        // ... 读取其他设置
-         */
+        useRandomize = ProviderHelper.useRandomize(context)
+        randomizeRadius = ProviderHelper.getRandomizeRadius(context)
     }
 
     /**

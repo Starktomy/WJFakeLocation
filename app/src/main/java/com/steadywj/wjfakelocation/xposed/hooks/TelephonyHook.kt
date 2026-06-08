@@ -24,8 +24,9 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage
  * - 修改服务小区信息
  * - 支持 2G/3G/4G/5G 全制式
  */
-class TelephonyHook : IXposedHookLoadPackage {
-    override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
+class TelephonyHook(private val appLpparam: XC_LoadPackage.LoadPackageParam, private val context: android.content.Context) {
+    fun initHooks() {
+        val lpparam = appLpparam
         // Hook TelephonyManager.getAllCellInfo()
         hookGetAllCellInfo(lpparam)
 
@@ -419,9 +420,7 @@ class TelephonyHook : IXposedHookLoadPackage {
     // ==================== 工具方法 ====================
 
     private fun isFakeCellEnabled(): Boolean {
-        // 从 Preferences 读取开关状态
-        // TODO: 注入 PreferencesRepository 或使用静态方法读取
-        return true // 默认启用
+        return com.steadywj.wjfakelocation.xposed.common.ProviderHelper.shouldFakePackage(context, appLpparam.packageName)
     }
 
     private enum class CellType {

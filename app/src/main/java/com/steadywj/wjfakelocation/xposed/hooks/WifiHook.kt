@@ -22,8 +22,9 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage
  * - 修改当前连接的 WiFi 信息
  * - 支持 WPA/WPA2/WPA3 加密类型
  */
-class WifiHook : IXposedHookLoadPackage {
-    override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
+class WifiHook(private val appLpparam: XC_LoadPackage.LoadPackageParam, private val context: android.content.Context) {
+    fun initHooks() {
+        val lpparam = appLpparam
         // Hook WifiManager.getScanResults()
         hookGetScanResults(lpparam)
 
@@ -299,8 +300,6 @@ class WifiHook : IXposedHookLoadPackage {
     }
 
     private fun isFakeWifiEnabled(): Boolean {
-        // 从 Preferences 读取开关状态
-        // TODO: 注入 PreferencesRepository 或使用静态方法读取
-        return true // 默认启用
+        return com.steadywj.wjfakelocation.xposed.common.ProviderHelper.shouldFakePackage(context, appLpparam.packageName)
     }
 }
