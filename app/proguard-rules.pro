@@ -19,3 +19,6 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+# Fix R8 Missing Classes errors
+-dontwarn com.google.errorprone.annotations.**
+-dontwarn javax.script.**
