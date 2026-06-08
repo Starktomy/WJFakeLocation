@@ -39,7 +39,10 @@ object ProviderHelper {
             "use_dingtalk_location_hook",
             "use_dingtalk_anti_detect",
             "use_dingtalk_update_hook",
-            "use_dingtalk_camera_hook"
+            "use_dingtalk_camera_hook",
+            "wifi_ssid",
+            "wifi_bssid",
+            "wifi_mac"
         )
 
     private var isObserverRegistered = false
@@ -239,6 +242,27 @@ object ProviderHelper {
         ensureCache(context)
         synchronized(cache) {
             return cache["use_dingtalk_camera_hook"] as? Boolean ?: false
+        }
+    }
+
+    fun getWifiSSID(context: Context): String {
+        ensureCache(context)
+        synchronized(cache) {
+            return cache["wifi_ssid"] as? String ?: "Spoofed_WiFi"
+        }
+    }
+
+    fun getWifiBSSID(context: Context): String {
+        ensureCache(context)
+        synchronized(cache) {
+            return cache["wifi_bssid"] as? String ?: "00:11:22:33:44:55"
+        }
+    }
+
+    fun getWifiMac(context: Context): String {
+        ensureCache(context)
+        synchronized(cache) {
+            return cache["wifi_mac"] as? String ?: "00:11:22:33:44:55"
         }
     }
 

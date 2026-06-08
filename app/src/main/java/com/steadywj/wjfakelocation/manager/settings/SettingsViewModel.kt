@@ -154,6 +154,39 @@ class SettingsViewModel
             }
         }
 
+        fun updateWifiSSID(ssid: String) {
+            viewModelScope.launch {
+                val current = settings.value
+                preferencesRepository.updateSettings(
+                    current.copy(
+                        wifiSSID = ssid,
+                    ),
+                )
+            }
+        }
+
+        fun updateWifiBSSID(bssid: String) {
+            viewModelScope.launch {
+                val current = settings.value
+                preferencesRepository.updateSettings(
+                    current.copy(
+                        wifiBSSID = bssid,
+                    ),
+                )
+            }
+        }
+
+        fun updateWifiMac(mac: String) {
+            viewModelScope.launch {
+                val current = settings.value
+                preferencesRepository.updateSettings(
+                    current.copy(
+                        wifiMac = mac,
+                    ),
+                )
+            }
+        }
+
         /**
          * 保存 API Key
          * @param apiKey API Key

@@ -179,9 +179,9 @@ class DingTalkHook : IAppHook {
                     override fun afterHookedMethod(param: MethodHookParam) {
                         if (!ProviderHelper.useDingTalkAntiDetect(context)) return
                         when (param.method.name) {
-                            "getSSID" -> param.result = "\"Spoofed_WiFi\""
-                            "getBSSID" -> param.result = "00:11:22:33:44:55"
-                            "getMacAddress" -> param.result = "00:11:22:33:44:55"
+                            "getSSID" -> param.result = "\"${ProviderHelper.getWifiSSID(context)}\""
+                            "getBSSID" -> param.result = ProviderHelper.getWifiBSSID(context)
+                            "getMacAddress" -> param.result = ProviderHelper.getWifiMac(context)
                         }
                     }
                 }

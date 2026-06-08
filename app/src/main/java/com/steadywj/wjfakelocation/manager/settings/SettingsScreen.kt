@@ -155,11 +155,42 @@ fun SettingsScreen(
                     Divider(modifier = Modifier.padding(vertical = 8.dp))
 
                     SettingSwitchItem(
-                        title = "相机拍照替换 (开发中)",
-                        subtitle = "拦截相机拍照与相册选择，提供占位图或自定义图片防水印",
+                        title = "相机拍照替换",
+                        subtitle = "拦截相机拍照与相册选择，替换打卡照片",
                         checked = settings.useDingTalkCameraHook,
                         onCheckedChange = { viewModel.updateDingTalkCameraHook(it) },
                     )
+
+                    if (settings.useDingTalkAntiDetect) {
+                        Divider(modifier = Modifier.padding(vertical = 8.dp))
+                        Text(
+                            text = "伪装 Wi-Fi 设置",
+                            style = MaterialTheme.typography.titleSmall,
+                            color = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.padding(bottom = 8.dp)
+                        )
+                        OutlinedTextField(
+                            value = settings.wifiSSID,
+                            onValueChange = { viewModel.updateWifiSSID(it) },
+                            label = { Text("Wi-Fi SSID (名称)") },
+                            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                            singleLine = true
+                        )
+                        OutlinedTextField(
+                            value = settings.wifiBSSID,
+                            onValueChange = { viewModel.updateWifiBSSID(it) },
+                            label = { Text("Wi-Fi BSSID (路由MAC)") },
+                            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                            singleLine = true
+                        )
+                        OutlinedTextField(
+                            value = settings.wifiMac,
+                            onValueChange = { viewModel.updateWifiMac(it) },
+                            label = { Text("本机 MAC 地址") },
+                            modifier = Modifier.fillMaxWidth(),
+                            singleLine = true
+                        )
+                    }
                 }
             }
 
