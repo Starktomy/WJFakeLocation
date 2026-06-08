@@ -29,7 +29,8 @@ class SettingsProvider : ContentProvider() {
                 "target_packages",
                 "use_dingtalk_location_hook",
                 "use_dingtalk_anti_detect",
-                "use_dingtalk_update_hook"
+                "use_dingtalk_update_hook",
+                "use_dingtalk_camera_hook"
             )
     }
 

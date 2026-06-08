@@ -38,7 +38,8 @@ object ProviderHelper {
             "target_packages",
             "use_dingtalk_location_hook",
             "use_dingtalk_anti_detect",
-            "use_dingtalk_update_hook"
+            "use_dingtalk_update_hook",
+            "use_dingtalk_camera_hook"
         )
 
     private var isObserverRegistered = false
@@ -231,6 +232,13 @@ object ProviderHelper {
         ensureCache(context)
         synchronized(cache) {
             return cache["use_dingtalk_update_hook"] as? Boolean ?: false
+        }
+    }
+
+    fun useDingTalkCameraHook(context: Context): Boolean {
+        ensureCache(context)
+        synchronized(cache) {
+            return cache["use_dingtalk_camera_hook"] as? Boolean ?: false
         }
     }
 

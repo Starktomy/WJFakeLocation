@@ -25,6 +25,7 @@ data class LocationSettings(
     val useDingTalkLocationHook: Boolean = false,
     val useDingTalkAntiDetect: Boolean = false,
     val useDingTalkUpdateHook: Boolean = false,
+    val useDingTalkCameraHook: Boolean = false,
 )
 
 data class SelectedLocation(

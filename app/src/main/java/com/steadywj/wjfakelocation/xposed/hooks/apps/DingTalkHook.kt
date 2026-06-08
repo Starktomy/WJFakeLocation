@@ -1,7 +1,7 @@
 package com.steadywj.wjfakelocation.xposed.hooks.apps
 
 import android.content.Context
-import com.steadywj.wjfakelocation.xposed.ProviderHelper
+import com.steadywj.wjfakelocation.xposed.common.ProviderHelper
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
@@ -24,19 +24,25 @@ class DingTalkHook : IAppHook {
         context: Context
     ) {
         if (ProviderHelper.useDingTalkLocationHook(context)) {
-            hookAMapLocation(appLpparam)
-            hookAMapLatLng(appLpparam)
+            hookAMapLocation(appLpparam, context)
+            hookAMapLatLng(appLpparam, context)
         }
         if (ProviderHelper.useDingTalkAntiDetect(context)) {
-            hookEnvironment(appLpparam)
+            hookEnvironment(appLpparam, context)
         }
         if (ProviderHelper.useDingTalkUpdateHook(context)) {
-            hookUpdate(appLpparam)
+            hookUpdate(appLpparam, context)
+        }
+        if (ProviderHelper.useDingTalkCameraHook(context)) {
+            hookCamera(appLpparam, context)
         }
     }
 
     @Suppress("TooGenericExceptionCaught", "SwallowedException")
-    private fun hookAMapLocation(appLpparam: XC_LoadPackage.LoadPackageParam) {
+    private fun hookAMapLocation(
+        appLpparam: XC_LoadPackage.LoadPackageParam,
+        context: Context
+    ) {
         try {
             val aMapLocationClass =
                 XposedHelpers.findClassIfExists(
@@ -50,8 +56,8 @@ class DingTalkHook : IAppHook {
                 "getLatitude",
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
-                        if (!ProviderHelper.isMockEnabled()) return
-                        val lat = ProviderHelper.getLatitude()
+                        if (!ProviderHelper.isPlaying(context)) return
+                        val lat = ProviderHelper.getLatitude(context)
                         if (lat != 0.0) {
                             param.result = lat
                         }
@@ -65,8 +71,8 @@ class DingTalkHook : IAppHook {
                 "getLongitude",
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
-                        if (!ProviderHelper.isMockEnabled()) return
-                        val lon = ProviderHelper.getLongitude()
+                        if (!ProviderHelper.isPlaying(context)) return
+                        val lon = ProviderHelper.getLongitude(context)
                         if (lon != 0.0) {
                             param.result = lon
                         }
@@ -87,7 +93,7 @@ class DingTalkHook : IAppHook {
                     method,
                     object : XC_MethodHook() {
                         override fun afterHookedMethod(param: MethodHookParam) {
-                            if (!ProviderHelper.isMockEnabled()) return
+                            if (!ProviderHelper.isPlaying(context)) return
                             // 暂时返回空或者模拟的地址，防止泄漏真实地址。
                             // 更完美的做法是在 ProviderHelper 里让用户设置虚拟地址文本
                         }
@@ -100,7 +106,10 @@ class DingTalkHook : IAppHook {
     }
 
     @Suppress("TooGenericExceptionCaught", "SwallowedException")
-    private fun hookAMapLatLng(appLpparam: XC_LoadPackage.LoadPackageParam) {
+    private fun hookAMapLatLng(
+        appLpparam: XC_LoadPackage.LoadPackageParam,
+        context: Context
+    ) {
         try {
             // 高德地图的 LatLng 对象，用于钉钉打卡地图展示界面的坐标
             val latLngClass =
@@ -113,9 +122,9 @@ class DingTalkHook : IAppHook {
                 latLngClass,
                 object : XC_MethodHook() {
                     override fun beforeHookedMethod(param: MethodHookParam) {
-                        if (!ProviderHelper.isMockEnabled()) return
-                        val lat = ProviderHelper.getLatitude()
-                        val lon = ProviderHelper.getLongitude()
+                        if (!ProviderHelper.isPlaying(context)) return
+                        val lat = ProviderHelper.getLatitude(context)
+                        val lon = ProviderHelper.getLongitude(context)
 
                         if (lat != 0.0 && lon != 0.0) {
                             // LatLng 构造函数签名：LatLng(double latitude, double longitude)
@@ -131,5 +140,29 @@ class DingTalkHook : IAppHook {
         } catch (e: Throwable) {
             // 忽略异常
         }
+    }
+
+    @Suppress("UnusedParameter")
+    private fun hookEnvironment(
+        appLpparam: XC_LoadPackage.LoadPackageParam,
+        context: Context
+    ) {
+        // 实现环境污染防护 (DDSEC / LBSWUA)
+    }
+
+    @Suppress("UnusedParameter")
+    private fun hookUpdate(
+        appLpparam: XC_LoadPackage.LoadPackageParam,
+        context: Context
+    ) {
+        // 实现版本强更屏蔽
+    }
+
+    @Suppress("UnusedParameter")
+    private fun hookCamera(
+        appLpparam: XC_LoadPackage.LoadPackageParam,
+        context: Context
+    ) {
+        // 实现相机拍照替换
     }
 }

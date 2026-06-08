@@ -110,6 +110,50 @@ class SettingsViewModel
             }
         }
 
+        fun updateDingTalkLocationHook(enabled: Boolean) {
+            viewModelScope.launch {
+                val current = settings.value
+                preferencesRepository.updateSettings(
+                    current.copy(
+                        useDingTalkLocationHook = enabled,
+                    ),
+                )
+            }
+        }
+
+        fun updateDingTalkAntiDetect(enabled: Boolean) {
+            viewModelScope.launch {
+                val current = settings.value
+                preferencesRepository.updateSettings(
+                    current.copy(
+                        useDingTalkAntiDetect = enabled,
+                    ),
+                )
+            }
+        }
+
+        fun updateDingTalkUpdateHook(enabled: Boolean) {
+            viewModelScope.launch {
+                val current = settings.value
+                preferencesRepository.updateSettings(
+                    current.copy(
+                        useDingTalkUpdateHook = enabled,
+                    ),
+                )
+            }
+        }
+
+        fun updateDingTalkCameraHook(enabled: Boolean) {
+            viewModelScope.launch {
+                val current = settings.value
+                preferencesRepository.updateSettings(
+                    current.copy(
+                        useDingTalkCameraHook = enabled,
+                    ),
+                )
+            }
+        }
+
         /**
          * 保存 API Key
          * @param apiKey API Key

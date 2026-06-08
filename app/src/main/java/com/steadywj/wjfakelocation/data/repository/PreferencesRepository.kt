@@ -71,6 +71,7 @@ class PreferencesRepository
                     useDingTalkLocationHook = prefs.getBoolean("use_dingtalk_location_hook", false),
                     useDingTalkAntiDetect = prefs.getBoolean("use_dingtalk_anti_detect", false),
                     useDingTalkUpdateHook = prefs.getBoolean("use_dingtalk_update_hook", false),
+                    useDingTalkCameraHook = prefs.getBoolean("use_dingtalk_camera_hook", false),
                 )
         }
 
@@ -139,6 +140,7 @@ class PreferencesRepository
                 putBoolean("use_dingtalk_location_hook", settings.useDingTalkLocationHook)
                 putBoolean("use_dingtalk_anti_detect", settings.useDingTalkAntiDetect)
                 putBoolean("use_dingtalk_update_hook", settings.useDingTalkUpdateHook)
+                putBoolean("use_dingtalk_camera_hook", settings.useDingTalkCameraHook)
                 apply()
             }
             _settings.value = settings
@@ -174,7 +176,8 @@ class PreferencesRepository
                         "${settings.useMeanSeaLevel}|${settings.meanSeaLevel}|" +
                         "${settings.useMeanSeaLevelAccuracy}|${settings.meanSeaLevelAccuracy}|" +
                         "${settings.useSpeed}|${settings.speed}|${settings.useSpeedAccuracy}|${settings.speedAccuracy}|" +
-                        "${settings.useDingTalkLocationHook}|${settings.useDingTalkAntiDetect}|${settings.useDingTalkUpdateHook}",
+                        "${settings.useDingTalkLocationHook}|${settings.useDingTalkAntiDetect}|" +
+                        "${settings.useDingTalkUpdateHook}|${settings.useDingTalkCameraHook}",
                 )
                 putLong("${profileKey}_timestamp", System.currentTimeMillis())
                 apply()
@@ -196,9 +199,11 @@ class PreferencesRepository
                 "${settings.useMeanSeaLevel}|${settings.meanSeaLevel}|" +
                 "${settings.useMeanSeaLevelAccuracy}|${settings.meanSeaLevelAccuracy}|" +
                 "${settings.useSpeed}|${settings.speed}|${settings.useSpeedAccuracy}|${settings.speedAccuracy}|" +
-                "${settings.useDingTalkLocationHook}|${settings.useDingTalkAntiDetect}|${settings.useDingTalkUpdateHook}"
+                "${settings.useDingTalkLocationHook}|${settings.useDingTalkAntiDetect}|" +
+                "${settings.useDingTalkUpdateHook}|${settings.useDingTalkCameraHook}"
         }
 
+        @Suppress("TooGenericExceptionCaught", "SwallowedException", "CyclomaticComplexMethod", "ReturnCount")
         private fun deserializeSettings(data: String): LocationSettings? {
             try {
                 val parts = data.split("|")
@@ -224,6 +229,7 @@ class PreferencesRepository
                     useDingTalkLocationHook = if (parts.size > 16) parts[16].toBoolean() else false,
                     useDingTalkAntiDetect = if (parts.size > 17) parts[17].toBoolean() else false,
                     useDingTalkUpdateHook = if (parts.size > 18) parts[18].toBoolean() else false,
+                    useDingTalkCameraHook = if (parts.size > 19) parts[19].toBoolean() else false,
                 )
             } catch (e: Exception) {
                 return null

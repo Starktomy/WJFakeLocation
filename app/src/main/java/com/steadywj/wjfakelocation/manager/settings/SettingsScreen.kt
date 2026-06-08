@@ -151,6 +151,15 @@ fun SettingsScreen(
                         checked = settings.useDingTalkUpdateHook,
                         onCheckedChange = { viewModel.updateDingTalkUpdateHook(it) },
                     )
+
+                    Divider(modifier = Modifier.padding(vertical = 8.dp))
+
+                    SettingSwitchItem(
+                        title = "相机拍照替换 (开发中)",
+                        subtitle = "拦截相机拍照与相册选择，提供占位图或自定义图片防水印",
+                        checked = settings.useDingTalkCameraHook,
+                        onCheckedChange = { viewModel.updateDingTalkCameraHook(it) },
+                    )
                 }
             }
 
