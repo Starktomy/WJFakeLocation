@@ -26,8 +26,8 @@ android {
         applicationId = "com.steadywj.wjfakelocation"
         minSdk = 31
         targetSdk = 34
-        versionCode = System.getenv("VERSION_CODE")?.toIntOrNull() ?: 1
-        versionName = System.getenv("VERSION_NAME") ?: "2.0.0"
+        versionCode = System.getenv("VERSION_CODE")?.toIntOrNull() ?: 30
+        versionName = System.getenv("VERSION_NAME") ?: "2.4.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
