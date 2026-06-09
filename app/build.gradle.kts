@@ -139,7 +139,7 @@ dependencies {
     // AMap (高德地图) - 本地 JAR (v2026.03.06)
     implementation(files("libs/AMap3DMap_11.1.000_AMapSearch_9.7.4_AMapLocation_11.1.000_20260306.jar"))
 
-    // Baidu Map (百度地图) - 本地 JAR (v7.5.4)
+    // Baidu Map (百度地图) - 本地 JAR (v8.1.0)
     implementation(files("libs/BaiduLBS_Android.jar"))
 
     // Supabase (云同步后端)
