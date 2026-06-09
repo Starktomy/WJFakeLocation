@@ -34,12 +34,13 @@ jobs:
       - name: Build Debug APK
         run: ./gradlew assembleDebug
       
-      - name: Build Release APK (without signing)
+      - name: Build Release APK
+        env:
+          KEYSTORE_PATH: release.keystore
+          RELEASE_KEYSTORE_PASSWORD: android
+          RELEASE_KEY_ALIAS: release
+          RELEASE_KEY_PASSWORD: android
         run: ./gradlew assembleRelease
-      
-      - name: Sign Release APK
-        run: jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 -keystore release.keystore -storepass android app/build/outputs/apk/release/app-release.apk release
-      
       - name: Get version from tag
         id: get_version
         run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
