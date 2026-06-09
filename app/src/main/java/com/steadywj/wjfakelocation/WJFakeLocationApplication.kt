@@ -35,10 +35,14 @@ class WJFakeLocationApplication : Application() {
      */
     private fun initAMapSDK() {
         try {
+            // 高德地图合规要求：必须在初始化前同意隐私政策
+            com.amap.api.maps.MapsInitializer.updatePrivacyShow(this, true, true)
+            com.amap.api.maps.MapsInitializer.updatePrivacyAgree(this, true)
+            com.amap.api.location.AMapLocationClient.updatePrivacyShow(this, true, true)
+            com.amap.api.location.AMapLocationClient.updatePrivacyAgree(this, true)
+
             // 初始化地图服务设置
             ServiceSettings.getInstance()
-
-            // 预加载地图接口（可选，根据实际需求）
 
             WJLogger.d("高德地图 SDK 初始化成功")
         } catch (e: Exception) {
@@ -52,6 +56,8 @@ class WJFakeLocationApplication : Application() {
      */
     private fun initBaiduMapSDK() {
         try {
+            // 百度地图合规要求：必须在初始化前同意隐私政策
+            SDKInitializer.setAgreePrivacy(this, true)
             // 初始化百度地图 SDK
             SDKInitializer.initialize(this)
 
