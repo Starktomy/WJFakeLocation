@@ -56,6 +56,16 @@
             android:authorities="com.steadywj.wjfakelocation.provider"
             android:exported="true" />
 
+        <!-- TODO: 请在此处填写你的百度地图和高德地图的 API KEY -->
+        <!-- 百度地图 API KEY -->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="在这里填入你的百度地图AK" />
+        <!-- 高德地图 API KEY -->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="在这里填入你的高德地图Key" />
+
         <!-- Whether to be an Xposed module (specify true) -->
         <meta-data
             android:name="xposedmodule"

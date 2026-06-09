@@ -37,29 +37,45 @@ fun BaiduMapView(
     var isMapLoaded by remember { mutableStateOf(false) }
 
     Box(modifier = modifier) {
-        AndroidView(
-            factory = { ctx ->
-                MapView(ctx).apply {
-                    // 初始化地?
-                    val baiduMap = map
+        var mapError by remember { mutableStateOf<String?>(null) }
 
-                    // 设置初始位置
-                    val currentLatLng = LatLng(initialLatitude, initialLongitude)
-                    val update = MapStatusUpdateFactory.newLatLngZoom(currentLatLng, zoomLevel)
-                    baiduMap.setMapStatus(update)
+        if (mapError != null) {
+            androidx.compose.material3.Text(
+                text = "地图加载失败: $mapError\n请确保已在 AndroidManifest.xml 配置正确的 API_KEY 且已同意隐私协议。",
+                color = androidx.compose.material3.MaterialTheme.colorScheme.error,
+                modifier = Modifier.align(Alignment.Center)
+            )
+        } else {
+            AndroidView(
+                factory = { ctx ->
+                    try {
+                        MapView(ctx).apply {
+                            // 初始化地?
+                            val baiduMap = map
 
-                    // 启用定位图层
-                    baiduMap.isMyLocationEnabled = true
+                            // 设置初始位置
+                            val currentLatLng = LatLng(initialLatitude, initialLongitude)
+                            val update = MapStatusUpdateFactory.newLatLngZoom(currentLatLng, zoomLevel)
+                            baiduMap.setMapStatus(update)
 
-                    // 标记加载完成
-                    isMapLoaded = true
+                            // 启用定位图层
+                            baiduMap.isMyLocationEnabled = true
 
-                    // 回调
-                    onMapReady?.invoke(baiduMap)
-                }
-            },
-            modifier = Modifier.fillMaxSize(),
-        )
+                            // 标记加载完成
+                            isMapLoaded = true
+
+                            // 回调
+                            onMapReady?.invoke(baiduMap)
+                        }
+                    } catch (e: Exception) {
+                        mapError = e.message ?: "未知错误"
+                        // Return a dummy View to prevent crash
+                        android.view.View(ctx)
+                    }
+                },
+                modifier = Modifier.fillMaxSize(),
+            )
+        }
 
         // 显示加载进度?
         if (!isMapLoaded) {
