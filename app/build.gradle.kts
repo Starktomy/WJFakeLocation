@@ -32,18 +32,6 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
-        release {
-            isMinifyEnabled = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
-            )
-        }
-        debug {
-            signingConfig = signingConfigs.getByName("debug")
-        }
-    }
     signingConfigs {
         getByName("debug") {
             enableV1Signing = true
@@ -67,6 +55,19 @@ android {
             enableV2Signing = true
             enableV3Signing = true
             enableV4Signing = true
+        }
+    }
+    buildTypes {
+        release {
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+            )
+            signingConfig = signingConfigs.getByName("release")
+        }
+        debug {
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
