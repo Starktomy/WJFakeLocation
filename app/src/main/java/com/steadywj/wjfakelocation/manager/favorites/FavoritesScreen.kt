@@ -33,21 +33,45 @@ fun FavoritesScreen(onNavigateBack: () -> Unit) {
     var showEditDialog by remember { mutableStateOf(false) }
     var editingFavorite by remember { mutableStateOf<FavoriteLocation?>(null) }
 
+    var isSearchActive by remember { mutableStateOf(false) }
+
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text(stringResource(id = R.string.nav_favorites)) },
-                navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "返回")
+            if (isSearchActive) {
+                TopAppBar(
+                    title = {
+                        OutlinedTextField(
+                            value = searchQuery,
+                            onValueChange = { searchQuery = it },
+                            placeholder = { Text("搜索收藏夹") },
+                            singleLine = true,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    },
+                    navigationIcon = {
+                        IconButton(onClick = { 
+                            isSearchActive = false 
+                            searchQuery = ""
+                        }) {
+                            Icon(Icons.Default.ArrowBack, contentDescription = "取消搜索")
+                        }
                     }
-                },
-                actions = {
-                    IconButton(onClick = { /* 搜索 */ }) {
-                        Icon(Icons.Default.Search, contentDescription = "搜索")
-                    }
-                },
-            )
+                )
+            } else {
+                TopAppBar(
+                    title = { Text(stringResource(id = R.string.nav_favorites)) },
+                    navigationIcon = {
+                        IconButton(onClick = onNavigateBack) {
+                            Icon(Icons.Default.ArrowBack, contentDescription = "返回")
+                        }
+                    },
+                    actions = {
+                        IconButton(onClick = { isSearchActive = true }) {
+                            Icon(Icons.Default.Search, contentDescription = "搜索")
+                        }
+                    },
+                )
+            }
         },
         floatingActionButton = {
             FloatingActionButton(
@@ -93,7 +117,11 @@ fun FavoritesScreen(onNavigateBack: () -> Unit) {
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                items(favorites, key = { it.id }) { favorite ->
+                val filteredFavorites = if (searchQuery.isBlank()) favorites else favorites.filter { 
+                    it.name.contains(searchQuery, ignoreCase = true) || 
+                    (it.address?.contains(searchQuery, ignoreCase = true) == true) 
+                }
+                items(filteredFavorites, key = { it.id }) { favorite ->
                     FavoriteItem(
                         favorite = favorite,
                         onEdit = {

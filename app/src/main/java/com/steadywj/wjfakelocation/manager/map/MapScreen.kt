@@ -31,6 +31,33 @@ fun MapScreen(
     
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+    var showSearchDialog by remember { mutableStateOf(false) }
+    var aMapInstance by remember { mutableStateOf<com.amap.api.maps.AMap?>(null) }
+
+    if (showSearchDialog) {
+        var searchQuery by remember { mutableStateOf("") }
+        AlertDialog(
+            onDismissRequest = { showSearchDialog = false },
+            title = { Text("搜索地点") },
+            text = {
+                OutlinedTextField(
+                    value = searchQuery,
+                    onValueChange = { searchQuery = it },
+                    label = { Text("输入地名") },
+                    singleLine = true
+                )
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    viewModel.searchLocation(searchQuery)
+                    showSearchDialog = false
+                }) { Text("搜索") }
+            },
+            dismissButton = {
+                TextButton(onClick = { showSearchDialog = false }) { Text("取消") }
+            }
+        )
+    }
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -60,7 +87,7 @@ fun MapScreen(
                         }
                     },
                     actions = {
-                        IconButton(onClick = { /* TODO 搜索功能 */ }) {
+                        IconButton(onClick = { showSearchDialog = true }) {
                             Icon(Icons.Default.Search, contentDescription = "搜索")
                         }
                     },
@@ -78,7 +105,15 @@ fun MapScreen(
                         }
                     }
                     FloatingActionButton(
-                        onClick = { /* TODO 定位到当前位?*/ },
+                        onClick = { 
+                            aMapInstance?.let { map ->
+                                val myLoc = map.myLocation
+                                if (myLoc != null) {
+                                    val latLng = com.amap.api.maps.model.LatLng(myLoc.latitude, myLoc.longitude)
+                                    map.animateCamera(com.amap.api.maps.CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+                                }
+                            }
+                        },
                         containerColor = MaterialTheme.colorScheme.secondary,
                     ) {
                         Icon(Icons.Default.MyLocation, contentDescription = "当前位置")
@@ -89,7 +124,6 @@ fun MapScreen(
             val currentLat by remember { mutableDoubleStateOf(39.9042) }
             val currentLng by remember { mutableDoubleStateOf(116.4074) }
             val zoomLevel by remember { mutableFloatStateOf(14f) }
-            var aMapInstance by remember { mutableStateOf<com.amap.api.maps.AMap?>(null) }
 
             Box(modifier = Modifier.fillMaxSize().padding(paddingValues)) {
                 // 集成高德地图 MapView
@@ -114,6 +148,14 @@ fun MapScreen(
                         title = "模拟位置",
                         map = aMapInstance
                     )
+
+                    // Animate camera to selected location
+                    LaunchedEffect(loc) {
+                        aMapInstance?.let { map ->
+                            val latLng = com.amap.api.maps.model.LatLng(loc.latitude, loc.longitude)
+                            map.animateCamera(com.amap.api.maps.CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+                        }
+                    }
                 }
             }
         }

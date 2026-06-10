@@ -49,17 +49,26 @@ fun ProfileDialog(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
                         FilterChip(
-                            onClick = { /* 加载家庭模式 */ },
+                            onClick = { 
+                                profileName = "家"
+                                onLoad("家")
+                            },
                             label = { Text("家") },
                             selected = false,
                         )
                         FilterChip(
-                            onClick = { /* 加载工作模式 */ },
+                            onClick = { 
+                                profileName = "公司"
+                                onLoad("公司")
+                            },
                             label = { Text("公司") },
                             selected = false,
                         )
                         FilterChip(
-                            onClick = { /* 加载学校模式 */ },
+                            onClick = { 
+                                profileName = "学校"
+                                onLoad("学校")
+                            },
                             label = { Text("学校") },
                             selected = false,
                         )

@@ -107,25 +107,17 @@ class MapViewModel
                     )
 
                 try {
-                    // 实现高德地图搜索
-
-                /*
-                aMapManager.geocodeAddress(query).collect { result ->
-                    result.onSuccess { latLng ->
-                        selectLocation(latLng.latitude, latLng.longitude, latLng.address)
-                        _uiState.value = _uiState.value.copy(isLoading = false)
-                    }.onFailure { error ->
-                        _uiState.value = _uiState.value.copy(
-                            isLoading = false,
-                            errorMessage = error.message ?: "搜索失败"
-                        )
+                    aMapManager.geocodeAddress(query).collect { result ->
+                        result.onSuccess { latLng ->
+                            selectLocation(latLng.latitude, latLng.longitude, latLng.address)
+                            _uiState.value = _uiState.value.copy(isLoading = false)
+                        }.onFailure { error ->
+                            _uiState.value = _uiState.value.copy(
+                                isLoading = false,
+                                errorMessage = error.message ?: "搜索失败"
+                            )
+                        }
                     }
-                }
-                 */
-
-                    // 临时占位实现
-                    delay(500L)
-                    _uiState.value = _uiState.value.copy(isLoading = false)
                 } catch (e: Exception) {
                     _uiState.value =
                         _uiState.value.copy(

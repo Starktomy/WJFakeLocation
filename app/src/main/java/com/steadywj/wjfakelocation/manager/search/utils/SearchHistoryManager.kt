@@ -176,9 +176,20 @@ class SearchHistoryManager
             try {
                 if (historyFile.exists()) {
                     val content = historyFile.readText()
-                    // TODO: 添加 kotlinx-serialization 依赖并实现完整解?
-                    // 这里简化处理，实际应该解析 JSON
-                    _searchHistory.value = emptyList()
+                    val jsonArray = org.json.JSONArray(content)
+                    val list = mutableListOf<SearchRecord>()
+                    for (i in 0 until jsonArray.length()) {
+                        val obj = jsonArray.getJSONObject(i)
+                        list.add(
+                            SearchRecord(
+                                query = obj.getString("query"),
+                                category = obj.optString("category", "default"),
+                                count = obj.optInt("count", 1),
+                                lastSearchedAt = obj.optLong("lastSearchedAt", System.currentTimeMillis())
+                            )
+                        )
+                    }
+                    _searchHistory.value = list
                 }
             } catch (e: Exception) {
                 _searchHistory.value = emptyList()
