@@ -36,6 +36,8 @@ fun BaiduMapView(
     val context = LocalContext.current
     var isMapLoaded by remember { mutableStateOf(false) }
 
+    var mapView by remember { mutableStateOf<MapView?>(null) }
+
     Box(modifier = modifier) {
         var mapError by remember { mutableStateOf<String?>(null) }
 
@@ -50,6 +52,7 @@ fun BaiduMapView(
                 factory = { ctx ->
                     try {
                         MapView(ctx).apply {
+                            mapView = this
                             // 初始化地?
                             val baiduMap = map
 
@@ -78,13 +81,16 @@ fun BaiduMapView(
         }
 
         // 显示加载进度?
-        if (!isMapLoaded) {
+        if (!isMapLoaded && mapError == null) {
             CircularProgressIndicator(
                 modifier = Modifier.align(Alignment.Center),
                 color = androidx.compose.material3.MaterialTheme.colorScheme.primary,
             )
         }
     }
+
+    // Call lifecycle handler
+    rememberBaiduMapLifecycle(mapView)
 }
 
 /**

@@ -68,6 +68,9 @@ fun AMapView(
             )
         }
     }
+
+    // Call lifecycle handler
+    AMapLifecycleHandler(mapView)
 }
 
 /**
@@ -130,6 +133,8 @@ fun AMapLifecycleHandler(mapView: MapView?) {
     val context = LocalContext.current
 
     DisposableEffect(context, mapView) {
+        // AMap REQUIRES onCreate to be called, otherwise it is frozen
+        mapView?.onCreate(android.os.Bundle())
         mapView?.onResume()
 
         onDispose {
